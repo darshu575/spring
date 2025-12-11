@@ -15,6 +15,8 @@ import java.util.List;
 
 public class ProductConfiguration {
 
+
+
     public ProductConfiguration() {
         System.out.println("ProductConfiguartion class invoked");
     }
