@@ -2,9 +2,11 @@ package com.xworkz.products.product;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Drone {
     private int droneId;
     private String droneBrand;
