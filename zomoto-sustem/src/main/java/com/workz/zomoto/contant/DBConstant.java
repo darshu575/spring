@@ -18,7 +18,6 @@ public enum DBConstant {
     void DBConstant(String prop){
         this.prop=prop;
         System.out.println("Running DBConstant ");
-
     }
     public void close() throws  Exception{
         System.out.println("Close DBConstamt");

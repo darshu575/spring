@@ -2,6 +2,9 @@
 <body>
 <h2>Medicine</h2>
 
+
+<a href="Search.jsp" >Search </a>
+
 <form action="addMedicine" method="post">
 
 Medicine Name : <input type="text" name="medicineName" />

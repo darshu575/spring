@@ -14,7 +14,13 @@
     <div class="container vh-100 d-flex justify-content-center align-items-center">
         <div class="card shadow-lg p-4 text-center" style="width: 350px;">
 
+           <a href="Search.jsp" class="btn btn-danger btn-lg w-100">
+                        Search
+                    </a>
+
             <h2 class="mb-4 text-danger fw-bold">Zomoto</h2>
+
+
 
             <a href="Zomoto.jsp" class="btn btn-danger btn-lg w-100">
                 Login
