@@ -5,10 +5,9 @@ import com.workz.zomoto.services.RestourentServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Component
 @RequestMapping("/")
@@ -29,16 +28,58 @@ public class RestoController {
         boolean isRestoAdded = restourentServices.validationAndSave(restourentDto);
         if (!isRestoAdded) {
 
-            return "Response.jsp";
-        } else return "Error.jsp";
+            return "Response";
+        } else return "Error";
 
     }
-@GetMapping("/search")
-    public String searchFoodName(@RequestParam("food") String foodname ,Model model){
-    System.out.println(foodname);
 
-    return "Search.jsp";
-}
+    @GetMapping("/search")
+    public String searchFoodName(@RequestParam("restourent") String restoName, Model model) {
+        System.out.println(restoName);
+
+        Optional<RestourentDto> restourentDto = restourentServices.validateAndSerach(restoName);
+        model.addAttribute("restoName", restourentDto.get());
+
+        return "SearchByName";
+    }
+
+    @GetMapping("/searchByNumber")
+    public String searchByGmail(@RequestParam("gmail") String gmail, Model model) {
+        System.out.println(gmail);
+
+        Optional<RestourentDto> restourentDto = restourentServices.ValidateEmailAndSerch(gmail);
+        model.addAttribute("gmail", restourentDto.get());
+
+
+        return "SearchByGmail";
+    }
+
+    @GetMapping("getRestourent/{restorentName}")
+    public String getRestourent(@PathVariable("restorentName") String name, Model model) {
+
+        System.out.println(name);
+        Optional<RestourentDto> restourentDto = restourentServices.getRestourentByName(name);
+        if (restourentDto.isPresent()) {
+            model.addAttribute("rname", restourentDto.get());
+            return "/UpdateRestourent";
+
+        }
+
+
+        return "/UpdateRestourent";
+
+    }
+
+    @PostMapping("/updateRestourent")
+    public String updateRestourent(RestourentDto restourentDto) {
+
+        boolean isUpadte = restourentServices.validateAndUpdate(restourentDto);
+        if (!isUpadte) {
+            return "Response";
+        } else {
+            return "Error.jsp";
+        }
+    }
 
 
 }

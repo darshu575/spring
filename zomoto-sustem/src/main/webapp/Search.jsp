@@ -1,8 +1,9 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Zomoto</title>
+    <title>Zomato</title>
 
     <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -11,27 +12,22 @@
 
 <body class="bg-light">
 
-    <div class="container vh-100 d-flex justify-content-center align-items-center">
-        <div class="card shadow-lg p-4 text-center" style="width: 350px;">
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+    <div class="card shadow-lg p-4" style="width: 420px;">
 
-         <form action="search" >
-                        <div class="mb-3">
-                            <label class="form-label">Search Food</label>
-                            <input type="text" name="food" class="form-control" />
-                        </div>
-                          <div class="d-grid">
-                           <input type="submit" value="Search"
-                           class="btn btn-danger btn-lg" />
-                        </div
+       <div class="d-grid gap-3">
+                <a href="SearchByName.jsp" class="btn btn-danger btn-lg">
+                     Search By Name
+                </a>
 
-                        </form>
+                   <div class="d-grid gap-3">
+                            <a href="SearchByGmail.jsp" class="btn btn-danger btn-lg">
+                                 Search By Gmail
+                            </a>
 
-        </div>
-    </div>
 
 </body>
 </html>
-
 
 
 

@@ -25,7 +25,7 @@
 
                         <div class="mb-3">
                             <label class="form-label">Restaurant Name</label>
-                            <input type="text" name="restourentName" class="form-control" />
+                            <input type="text" name="restourentName"class="form-control" />
                         </div>
 
                         <div class="mb-3">
