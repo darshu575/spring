@@ -10,5 +10,7 @@ public interface ClothingService {
     String getClothNameAndValidate(int id);
 
 
+    String getClothTypaeById(int i);
 
+    List<ClothingDto> getAllClothing();
 }

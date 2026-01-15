@@ -34,7 +34,7 @@ public class EvantRunner {
 //
 
 
-        List<EventEntity> allEvent = eventService.getAllEventsDetials();
+        List<EventDto> allEvent = eventService.getAllEventsDetials();
         allEvent.stream().forEach(System.out::println);
 
         System.out.println("forloop");

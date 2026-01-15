@@ -19,6 +19,8 @@ public class UserDaoImpl implements UserDao {
         entityManager.getTransaction().begin();
         entityManager.persist(userEntity);
         entityManager.getTransaction().commit();
+        entityManager.getTransaction().rollback();
+        entityManager.getTransaction().getClass();
 
 
         System.out.println(userEntity);

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.jws.WebParam;
+
 @Controller
 @RequestMapping("/")
 public class UserControler {
@@ -34,11 +36,12 @@ public class UserControler {
 
     @SneakyThrows
     @PostMapping("/registerDetails")
-    public String registerUser(SignUpDto signUpDto) {
+    public String registerUser(SignUpDto signUpDto,Model model) {
 
         System.out.println(signUpDto);
         boolean isSaved = userService.ValidateAndSave(signUpDto);
         if (isSaved) {
+            model.addAttribute("user",signUpDto);
             return "Result.jsp";
         } else return "Error.jsp";
 

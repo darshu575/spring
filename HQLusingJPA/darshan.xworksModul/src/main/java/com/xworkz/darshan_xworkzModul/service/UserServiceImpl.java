@@ -24,8 +24,8 @@ public class UserServiceImpl implements UserService {
 
         boolean isInValid = false;
 
-        if (signUpDto.getName() == null
-                || signUpDto.getName().trim().length() < 3) {
+        if (signUpDto.getUserName() == null
+                || signUpDto.getUserName().trim().length() < 3) {
             isInValid = true;
             System.out.println("Invalid Name");
         } else if (signUpDto.getEmail() == null

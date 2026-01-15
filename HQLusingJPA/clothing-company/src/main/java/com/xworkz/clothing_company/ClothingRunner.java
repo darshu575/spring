@@ -1,6 +1,7 @@
 package com.xworkz.clothing_company;
 
 import com.xworkz.clothing_company.dto.ClothingDto;
+import com.xworkz.clothing_company.entity.ClothingEntity;
 import com.xworkz.clothing_company.services.ClothingService;
 import com.xworkz.clothing_company.services.ClothingServiceImpl;
 
@@ -24,15 +25,29 @@ public class ClothingRunner {
         System.out.println(clothingDto);
 //        boolean isSaved=clothingService.ValidateAndSave(clothingDto);
 //        if (isSaved){
-//            System.out.println("Saved Details is="+isSaved);
+//            System.out.println( " Saved Details is = " + isSaved);
 //        }
+        System.out.println("1 : getAllClothing Details");
+       List<ClothingDto> clothingEntity=clothingService.getAllClothing();
+       clothingEntity.stream().forEach(System.out::println);
 
-        System.out.println("1 : Get ClothNameByClothID");
+
+        System.out.println("2 : Get ClothNameByClothID");
         String clothName=clothingService.getClothNameAndValidate(1);
         System.out.println("clothing Name="+clothName);
 
 
-        System.out.println(" 2 : Get ClothTypeByClothID");
+        System.out.println(" 3 : Get ClothTypeByClothID");
+        String clothType=clothingService.getClothTypaeById(2);
+        System.out.println("clothType is="+clothType);
+
+
+
+        System.out.println("");
+
+
+
+
 
 
 

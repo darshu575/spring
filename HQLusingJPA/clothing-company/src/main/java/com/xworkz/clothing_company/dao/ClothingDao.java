@@ -9,5 +9,9 @@ public interface ClothingDao {
 
     String getClothNameByClothId(int id);
 
-    List<String[]> getTypeByClothId(int id);
+
+    String getClothTypeById(int i);
+
+    List<ClothingEntity> getAllClothingDetaisl();
+
 }

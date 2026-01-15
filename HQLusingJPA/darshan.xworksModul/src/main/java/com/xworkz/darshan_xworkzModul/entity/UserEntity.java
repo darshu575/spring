@@ -13,7 +13,7 @@ import javax.persistence.*;
 //@NamedQuery(name = "getByGmail",query = "select ref.password from userentity ref where ref.email=:ugamil")
 public class UserEntity {
     @Id
-    private String name;
+    private String userName;
     private String email;
     private Long phoneNumber;
     private int age;

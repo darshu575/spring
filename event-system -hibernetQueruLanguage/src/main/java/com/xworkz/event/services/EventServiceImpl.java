@@ -114,7 +114,7 @@ public class EventServiceImpl implements EventService{
 
        List<EventEntity> isFind= eventDAo.getAllDetails();
        if (isFind!=null) {
-
+ BeanUtils.copyProperties();
 
            return isFind;
        }else

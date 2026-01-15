@@ -48,13 +48,16 @@
 
             <!-- RIGHT BUTTONS -->
             <div class="d-flex gap-2">
+
+
             <form action="signIn" method="get">
 
-                              <button type="submit"> Sign In</button>
-                        </form>
+                  <button type="submit"> Sign In</button>
+            </form>
                 <form action="signUp" method="get">
                                 <button type="submit"> Sign Up</button>
-                                </form>
+                </form>
+
             </div>
 
         </div>
@@ -63,13 +66,7 @@
 
 <!-- HERO SECTION -->
 <div class="container text-center my-5">
-    <h1 class="fw-bold mb-3">User Date Saved Succesufully</h1>
-
-     <tr>
-    <th>Name</th>
-      <td>${user.userName}</td>
-      </tr>
-      
+    <h1 class="fw-bold mb-3">Welcome to X-Workz</h1>
     <p class="text-muted">
         A modern and secure platform to manage your application efficiently.
     </p>

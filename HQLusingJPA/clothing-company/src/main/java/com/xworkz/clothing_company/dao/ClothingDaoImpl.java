@@ -1,13 +1,16 @@
 package com.xworkz.clothing_company.dao;
 
 import com.xworkz.clothing_company.entity.ClothingEntity;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import java.util.Collections;
 import java.util.List;
 
+@Repository
 public class ClothingDaoImpl implements ClothingDao {
 
 
@@ -36,14 +39,27 @@ public class ClothingDaoImpl implements ClothingDao {
     }
 
     @Override
-    public List<String[]> getTypeByClothId(int id) {
+    public String getClothTypeById(int i) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("clothingCompany");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         Query query = entityManager.createQuery("select c.type from ClothingEntity c where c.clothId=:cid");
-        query.setParameter("cid", id);
-        List<String[]> istype = query.getResultList();
-        return istype;
+        query.setParameter("cid",i);
+       String clothType= query.getSingleResult().toString();
+       return clothType;
+
+
+
+    }
+
+    @Override
+    public List<ClothingEntity> getAllClothingDetaisl() {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("clothingCompany");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        Query query = entityManager.createQuery("select ref from ClothingEntity ref ");
+        List<ClothingEntity> allClothings=query.getResultList();
+        return allClothings;
 
     }
 

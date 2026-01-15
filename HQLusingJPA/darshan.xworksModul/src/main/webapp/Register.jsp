@@ -77,7 +77,7 @@
                         <!-- Name -->
                         <div class="mb-2">
                             <label class="form-label">Name</label>
-                            <input type="text" class="form-control form-control-sm" id="name" name="name">
+                            <input type="text" class="form-control form-control-sm" id="name" name="userName">
                             <small class="text-danger" id="nameError"></small>
                         </div>
 
