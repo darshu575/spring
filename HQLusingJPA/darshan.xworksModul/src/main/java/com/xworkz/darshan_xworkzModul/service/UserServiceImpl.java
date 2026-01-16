@@ -96,6 +96,7 @@ public class UserServiceImpl implements UserService {
 
             // Step 3: Decrypt password
             String decryptedPassword = decrypt(encryptedPassword);
+            System.out.println(decryptedPassword);
 
             if (password.equals(decryptedPassword)) {
 

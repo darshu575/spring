@@ -178,6 +178,8 @@ function validateForm() {
     document.querySelectorAll("small").forEach(e => e.innerText = "");
 
     // Name
+
+        let namePattern = /^[A-Za-z\s]+$/;
     if (name.length < 3) {
         document.getElementById("nameError").innerText = "Name must be at least 3 characters";
         isValid = false;
