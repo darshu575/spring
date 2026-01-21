@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <html>
 <head>
     <title>OTP Login</title>
@@ -35,31 +38,32 @@
 
             <h4 class="text-center mb-4 fw-bold">Login with OTP</h4>
 
-            <form action="verifyOtp" method="post" onsubmit="return validateOTP()">
-
-                <!-- EMAIL -->
+            <!-- Form to send OTP -->
+            <form action="sendOtp" method="post" class="mb-3">
                 <div class="mb-3">
                     <label>Email</label>
                     <input type="email" class="form-control" id="email" name="email"
-                           placeholder="Enter email">
+                           placeholder="Enter email" value="${email}" required>
                     <small class="text-danger" id="emailError"></small>
                 </div>
 
-                <!-- SEND OTP -->
                 <div class="d-grid mb-3">
-                    <button type="button" class="btn btn-primary"
-                            onclick="sendOtp()">Send OTP</button>
+                    <button type="submit" class="btn btn-primary">Send OTP</button>
                 </div>
+            </form>
 
-                <!-- OTP -->
+            <!-- Form to verify OTP -->
+            <form action="verifyOtp" method="post" onsubmit="return validateOTP()">
+                <input type="hidden" name="email" value="${email}"> <!-- Pass email again -->
+
                 <div class="mb-3">
                     <label>Enter OTP</label>
                     <input type="text" class="form-control" id="otp" name="otp"
-                           placeholder="Enter OTP">
+                           placeholder="Enter OTP" required>
+                    <small class="text-danger">${error}</small>
                     <small class="text-danger" id="otpError"></small>
                 </div>
 
-                <!-- LOGIN -->
                 <div class="d-grid">
                     <button type="submit" class="btn btn-warning fw-bold">
                         Verify & Login
@@ -67,11 +71,10 @@
                 </div>
 
                 <div class="text-center mt-3">
-                    <small>Don't have account?
+                    <small>Don't have an account?
                         <a href="Register.jsp" class="text-decoration-none">Sign Up</a>
                     </small>
                 </div>
-
             </form>
 
         </div>
@@ -79,31 +82,9 @@
 </div>
 
 <script>
-    function sendOtp() {
-        let email = document.getElementById("email").value.trim();
-
-        if (email === "") {
-            document.getElementById("emailError").innerText = "Email required";
-            return;
-        }
-
-        alert("OTP sent to " + email);
-
-        // 🔹 Later connect backend:
-        // fetch("sendOtp?email=" + email)
-    }
-
     function validateOTP() {
-        let email = document.getElementById("email").value.trim();
         let otp = document.getElementById("otp").value.trim();
-
-        document.getElementById("emailError").innerText = "";
         document.getElementById("otpError").innerText = "";
-
-        if (email === "") {
-            document.getElementById("emailError").innerText = "Email required";
-            return false;
-        }
 
         if (otp === "") {
             document.getElementById("otpError").innerText = "OTP required";

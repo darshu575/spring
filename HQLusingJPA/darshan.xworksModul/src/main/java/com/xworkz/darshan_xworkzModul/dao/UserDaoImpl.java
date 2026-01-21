@@ -1,5 +1,6 @@
 package com.xworkz.darshan_xworkzModul.dao;
 
+import com.xworkz.darshan_xworkzModul.entity.OtpEntity;
 import com.xworkz.darshan_xworkzModul.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,7 @@ public class UserDaoImpl implements UserDao {
         entityManager.getTransaction().commit();
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().getClass();
+
 
 
         System.out.println(userEntity);
@@ -68,6 +70,67 @@ public class UserDaoImpl implements UserDao {
         query.setParameter("ugamil",gmail);
         query.executeUpdate();
         entityManager.getTransaction().commit();
+    }
+
+    @Override
+    public void saveOtp(OtpEntity otpEntity) {
+        EntityManager entityManager=entityManagerFactory.createEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            entityManager.persist(otpEntity);
+            entityManager.getTransaction().commit();
+
+        }catch (Exception e){
+            if (entityManager.getTransaction().isActive()){
+                entityManager.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        }finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
+    public OtpEntity findOtpByGmail(String email, String otp) {
+        System.out.println("findOtpByGmail started");
+        EntityManager entityManager=entityManagerFactory.createEntityManager();
+        try {
+            Query query=entityManager.createQuery("select o from OtpEntity o where o.email=:Ogamil and  o.otp=:Ootp");
+            query.setParameter("Ogamil",email);
+            query.setParameter("Ootp",otp);
+            OtpEntity otpEntity= (OtpEntity) query.getSingleResult();
+            System.out.println(otpEntity);
+
+            return otpEntity;
+
+
+       }catch (Exception e){
+
+       }finally {
+             entityManager.close();
+        }
+
+
+        return null;
+    }
+
+    @Override
+    public void deleteOpt(OtpEntity dbOtp) {
+        System.out.println("deleteOpt started");
+        EntityManager entityManager=entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            OtpEntity merged=entityManager.merge(dbOtp);
+            entityManager.remove(merged);
+            entityManager.getTransaction().commit();
+        }catch (Exception e){
+            if (entityManager.getTransaction().isActive()){
+                entityManager.getTransaction().commit();
+            }
+            e.printStackTrace();
+        }finally {
+            entityManager.close();
+        }
     }
 
 }
