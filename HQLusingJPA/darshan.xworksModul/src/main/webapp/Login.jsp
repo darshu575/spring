@@ -1,4 +1,8 @@
+
 <!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <html>
 <head>
     <title>Login</title>
@@ -91,7 +95,7 @@
                            class="form-control"
                            id="email"
                            name="email"
-                           placeholder="Enter email">
+                           placeholder="Enter email" value="${email}">
                     <small class="text-danger" id="emailError"></small>
                 </div>
 
@@ -105,7 +109,7 @@
                            placeholder="Enter password">
                     <small class="text-danger" id="passwordError"></small>
                 </div>
-                <div class="d-grid mt-4"> <button type="submit" class="btn btn-warning fw-bold"> Login </button>
+                <div class="d-grid mt-4"> <button type="submit" class="btn btn-warning fw-bold" <c:if test="${ disable }">disabled</c:if> >Login </button>
                 </div>
 
 
@@ -115,7 +119,10 @@
                 </small>
                 </div>
 
-
+<div class="text-center mt-3"> <a href="Otp.jsp" class="text-decoration-none" <c:if test="${ !enableLink }">hidden</c:if>>
+                Forget Password</a>
+                </small>
+                </div>
             </form>
 
 

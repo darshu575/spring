@@ -6,4 +6,10 @@ public interface UserDao {
     boolean save(UserEntity userEntity);
 
     UserEntity getGmail(String gmail);
+
+    int getCount(String gmail);
+
+    void getCountGmail(String gmail);
+
+    void updateCount(String gmail);
 }

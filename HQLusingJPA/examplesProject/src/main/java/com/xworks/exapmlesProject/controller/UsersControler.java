@@ -2,7 +2,10 @@ package com.xworks.exapmlesProject.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/")
@@ -16,6 +19,8 @@ public class UsersControler {
     public String signIn() {
         return "Login.jsp";
     }
+
+
 
 
 

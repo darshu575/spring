@@ -22,58 +22,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean ValidateAndSave(SignUpDto signUpDto) throws Exception {
 
-        boolean isInValid = false;
 
-        if (signUpDto.getUserName() == null
-                || signUpDto.getUserName().trim().length() < 3) {
-            isInValid = true;
-            System.out.println("Invalid Name");
-        } else if (signUpDto.getEmail() == null
-                || !signUpDto.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
-            isInValid = true;
-            System.out.println("Invalid Email");
-        } else if (signUpDto.getPhoneNumber() == null
-                || signUpDto.getPhoneNumber().toString().length() != 10) {
-            isInValid = true;
-            System.out.println("Invalid Phone Number");
-        } else if (signUpDto.getAge() < 18 || signUpDto.getAge() > 100) {
-            isInValid = true;
-            System.out.println("Invalid Age");
-        } else if (signUpDto.getGender() == null
-                || signUpDto.getGender().trim().isEmpty()) {
-            isInValid = true;
-            System.out.println("Invalid Gender");
-        } else if (signUpDto.getAddress() == null
-                || signUpDto.getAddress().trim().length() < 5) {
-            isInValid = true;
-            System.out.println("Invalid Address");
-        } else if (signUpDto.getPassword() == null
-                || signUpDto.getPassword().length() < 6) {
-            isInValid = true;
-            System.out.println("Invalid Password");
-        } else if (!signUpDto.getPassword().equals(signUpDto.getConfirmPassword())) {
-            isInValid = true;
-            System.out.println("Password And Confirm Password Not Match");
+        //  Encrypt password using Cipher
 
-        } else {
-            //  Encrypt password using Cipher
-
-            String encryptedPassword = encrypt(signUpDto.getPassword());
-            signUpDto.setPassword(encryptedPassword);
+        String encryptedPassword = encrypt(signUpDto.getPassword());
+        signUpDto.setPassword(encryptedPassword);
 
 
-            //  Do not save confirm password
-            signUpDto.setConfirmPassword(null);
+        //  Do not save confirm password
+        signUpDto.setConfirmPassword(null);
 
-            System.out.println("User data validated successfully");
-            System.out.println(signUpDto);
+        System.out.println("User data validated successfully");
+        System.out.println(signUpDto);
 
-            UserEntity userEntity = new UserEntity();
-            BeanUtils.copyProperties(signUpDto, userEntity);
-            return userDao.save(userEntity);
-        }
-
-        return isInValid;
+        UserEntity userEntity = new UserEntity();
+        BeanUtils.copyProperties(signUpDto, userEntity);
+        return userDao.save(userEntity);
 
 
     }
@@ -83,7 +47,7 @@ public class UserServiceImpl implements UserService {
     public Boolean getGmailAndPassword(String gmail, String password) {
 
 
-        UserEntity userEntity =  userDao.getGmail(gmail);
+        UserEntity userEntity = userDao.getGmail(gmail);
         if (userEntity == null) {
             System.out.println("Email Not Found");
             return null;
@@ -120,9 +84,24 @@ public class UserServiceImpl implements UserService {
 
         }
 
-        return null;
+        return false;
 
 
+    }
+
+    @Override
+    public int getCount(String gmail) {
+        return userDao.getCount(gmail);
+    }
+
+    @Override
+    public void getCountGmail(String gmail) {
+        userDao.getCountGmail(gmail);
+    }
+
+    @Override
+    public void updateCount(String gmail) {
+        userDao.updateCount(gmail);
     }
 
     private String encrypt(String strToEncrypt) throws Exception {

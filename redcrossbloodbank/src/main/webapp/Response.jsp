@@ -10,6 +10,8 @@
 
 <body class="bg-light">
 
+
+
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
     <div class="container">
@@ -19,6 +21,7 @@
                 data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
+
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">

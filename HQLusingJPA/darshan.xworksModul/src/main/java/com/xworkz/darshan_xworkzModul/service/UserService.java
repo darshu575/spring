@@ -7,4 +7,11 @@ public interface UserService {
 
 
     Boolean  getGmailAndPassword(String gmail, String password);
+
+    int getCount(String gmail);
+
+    void getCountGmail(String gmail);
+
+    void updateCount(String gmail);
+
 }

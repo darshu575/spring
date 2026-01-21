@@ -15,11 +15,12 @@ public class UserEntity {
     @Id
     private String userName;
     private String email;
-    private Long phoneNumber;
+    private String phoneNumber;
     private int age;
     private String gender;
     private String address;
     private String password;
     private  String confirmPassword;
+    private int count;
 
 }
