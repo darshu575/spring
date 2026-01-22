@@ -24,7 +24,6 @@ public class UserDaoImpl implements UserDao {
         entityManager.getTransaction().getClass();
 
 
-
         System.out.println(userEntity);
         return true;
     }
@@ -32,11 +31,11 @@ public class UserDaoImpl implements UserDao {
     @Override
     public UserEntity getGmail(String gmail) {
 
-       EntityManager entityManager=entityManagerFactory.createEntityManager();
-      Query query= entityManager.createQuery("from UserEntity g where g.email=:ugamil",UserEntity.class);
-      query.setParameter("ugamil",gmail);
-      UserEntity userEntity= (UserEntity) query.getSingleResult();
-      return userEntity;
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        Query query = entityManager.createQuery("from UserEntity g where g.email=:ugamil", UserEntity.class);
+        query.setParameter("ugamil", gmail);
+        UserEntity userEntity = (UserEntity) query.getSingleResult();
+        return userEntity;
 
 
     }
@@ -45,47 +44,47 @@ public class UserDaoImpl implements UserDao {
     public int getCount(String gmail) {
 
 
-        EntityManager entityManager=entityManagerFactory.createEntityManager();
-        Query query= entityManager.createQuery("select g.count from UserEntity g where g.email=:ugamil");
-        query.setParameter("ugamil",gmail);
-        int userEntity= (int) query.getSingleResult();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        Query query = entityManager.createQuery("select g.count from UserEntity g where g.email=:ugamil");
+        query.setParameter("ugamil", gmail);
+        int userEntity = (int) query.getSingleResult();
         return userEntity;
     }
 
     @Override
     public void getCountGmail(String gmail) {
-        EntityManager entityManager=entityManagerFactory.createEntityManager();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
-        Query query= entityManager.createQuery("update UserEntity u set u.count=u.count+1 where u.email=:ugamil");
-        query.setParameter("ugamil",gmail);
-         query.executeUpdate();
-         entityManager.getTransaction().commit();
+        Query query = entityManager.createQuery("update UserEntity u set u.count=u.count+1 where u.email=:ugamil");
+        query.setParameter("ugamil", gmail);
+        query.executeUpdate();
+        entityManager.getTransaction().commit();
     }
 
     @Override
     public void updateCount(String gmail) {
-        EntityManager entityManager=entityManagerFactory.createEntityManager();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
-        Query query= entityManager.createQuery("update UserEntity u set u.count=0 where u.email=:ugamil");
-        query.setParameter("ugamil",gmail);
+        Query query = entityManager.createQuery("update UserEntity u set u.count=0 where u.email=:ugamil");
+        query.setParameter("ugamil", gmail);
         query.executeUpdate();
         entityManager.getTransaction().commit();
     }
 
     @Override
     public void saveOtp(OtpEntity otpEntity) {
-        EntityManager entityManager=entityManagerFactory.createEntityManager();
-        try{
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
             entityManager.getTransaction().begin();
             entityManager.persist(otpEntity);
             entityManager.getTransaction().commit();
 
-        }catch (Exception e){
-            if (entityManager.getTransaction().isActive()){
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) {
                 entityManager.getTransaction().rollback();
             }
             e.printStackTrace();
-        }finally {
+        } finally {
             entityManager.close();
         }
     }
@@ -93,21 +92,21 @@ public class UserDaoImpl implements UserDao {
     @Override
     public OtpEntity findOtpByGmail(String email, String otp) {
         System.out.println("findOtpByGmail started");
-        EntityManager entityManager=entityManagerFactory.createEntityManager();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
-            Query query=entityManager.createQuery("select o from OtpEntity o where o.email=:Ogamil and  o.otp=:Ootp");
-            query.setParameter("Ogamil",email);
-            query.setParameter("Ootp",otp);
-            OtpEntity otpEntity= (OtpEntity) query.getSingleResult();
+            Query query = entityManager.createQuery("select o from OtpEntity o where o.email=:Ogamil and  o.otp=:Ootp");
+            query.setParameter("Ogamil", email);
+            query.setParameter("Ootp", otp);
+            OtpEntity otpEntity = (OtpEntity) query.getSingleResult();
             System.out.println(otpEntity);
 
             return otpEntity;
 
 
-       }catch (Exception e){
+        } catch (Exception e) {
 
-       }finally {
-             entityManager.close();
+        } finally {
+            entityManager.close();
         }
 
 
@@ -117,20 +116,40 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void deleteOpt(OtpEntity dbOtp) {
         System.out.println("deleteOpt started");
-        EntityManager entityManager=entityManagerFactory.createEntityManager();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
             entityManager.getTransaction().begin();
-            OtpEntity merged=entityManager.merge(dbOtp);
+            OtpEntity merged = entityManager.merge(dbOtp);
             entityManager.remove(merged);
             entityManager.getTransaction().commit();
-        }catch (Exception e){
-            if (entityManager.getTransaction().isActive()){
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) {
                 entityManager.getTransaction().commit();
             }
             e.printStackTrace();
-        }finally {
+        } finally {
             entityManager.close();
         }
+    }
+
+    @Override
+    public boolean updatePassword(String email, String encryptNewPassowrd) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createQuery("update  UserEntity u set u.password=:nPassword where u.email=:oldEmail");
+            query.setParameter("nPassword", encryptNewPassowrd);
+            query.setParameter("oldEmail", email);
+          int isUpadate=  query.executeUpdate();
+          entityManager.getTransaction().commit();
+          if (isUpadate > 0){
+              return true;
+          }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

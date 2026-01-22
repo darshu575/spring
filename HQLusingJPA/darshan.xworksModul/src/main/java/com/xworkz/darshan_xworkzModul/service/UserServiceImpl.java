@@ -104,6 +104,15 @@ public class UserServiceImpl implements UserService {
         userDao.updateCount(gmail);
     }
 
+    @Override
+    public boolean updatePassword(String email, String newPassword, String confirmPassword) throws Exception {
+        String encryptNewPassowrd=encrypt(newPassword);
+        System.out.println(encryptNewPassowrd);
+        boolean isUpadate=userDao.updatePassword(email,encryptNewPassowrd);
+
+        return isUpadate;
+    }
+
     private String encrypt(String strToEncrypt) throws Exception {
         SecretKeySpec secretKey = new SecretKeySpec(SECRET_KEY.getBytes(), "AES");
 

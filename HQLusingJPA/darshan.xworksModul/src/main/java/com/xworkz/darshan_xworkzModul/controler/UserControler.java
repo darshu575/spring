@@ -192,7 +192,8 @@ public  ModelAndView verifyOtp(@RequestParam String email,@RequestParam String o
             userDao.deleteOpt(dbOtp);
 
               ModelAndView mv=new ModelAndView();
-              mv.setViewName("Home.jsp");
+              mv.addObject("reSetEmail",email);
+              mv.setViewName("ReSetPassord.jsp");
               return  mv;
           }
 
@@ -203,6 +204,27 @@ public  ModelAndView verifyOtp(@RequestParam String email,@RequestParam String o
     System.out.println("VerifyOtp ended");
           return modelAndView;
 
+}
+@PostMapping("/reSetPassword")
+private ModelAndView passwordReSet(@RequestParam("newemail") String email,@RequestParam("newPassword") String newPassword,@RequestParam("confirmPassword") String ConfirmPassword,ModelAndView modelAndView) throws Exception {
+    System.out.println(email);
+    System.out.println(newPassword);
+    System.out.println(ConfirmPassword);
+
+   boolean isUpadate= userService.updatePassword(email,newPassword,ConfirmPassword);
+    if (isUpadate){
+        userService.updateCount(email);
+        modelAndView.setViewName("Home.jsp");
+        return modelAndView;
+    }else
+    {
+        modelAndView.addObject("ErrorPassord","Password Not Match");
+    }
+
+    
+
+
+    return null;
 }
 
 

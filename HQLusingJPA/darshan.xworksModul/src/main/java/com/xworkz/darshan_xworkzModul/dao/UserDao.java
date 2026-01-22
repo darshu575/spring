@@ -22,4 +22,5 @@ public interface UserDao  {
 
     void deleteOpt(OtpEntity dbOtp);
 
+    boolean updatePassword(String email, String encryptNewPassowrd);
 }

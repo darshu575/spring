@@ -15,5 +15,6 @@ public interface UserService {
     void updateCount(String gmail);
 
 
+    boolean updatePassword(String email, String newPassword, String confirmPassword) throws Exception;
 
 }

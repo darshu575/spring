@@ -63,7 +63,6 @@
                     <small class="text-danger">${error}</small>
                     <small class="text-danger" id="otpError"></small>
                 </div>
-
                 <div class="d-grid">
                     <button type="submit" class="btn btn-warning fw-bold">
                         Verify & Login
