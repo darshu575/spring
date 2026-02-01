@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<%@ page isELIgnored="false" %>
+
 <!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <html>
 <head>
     <title>Re-Set-Password</title>
@@ -51,7 +52,7 @@
                         <!-- Email -->
                         <div class="mb-2">
                             <label>Email</label>
-                            <input type="email" id="email" name="newemail"
+                            <input type="email" id="email" name="newEmail"
                                    class="form-control form-control-sm"
                                    onblur="validateEmail()" value="${reSetEmail}">
                             <small class="text-danger" id="emailError"></small>

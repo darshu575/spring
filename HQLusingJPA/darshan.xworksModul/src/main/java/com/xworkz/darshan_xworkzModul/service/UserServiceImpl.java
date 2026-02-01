@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
 
     @SneakyThrows
     @Override
-    public Boolean getGmailAndPassword(String gmail, String password) {
+    public SignUpDto getPasswordByGmail(String gmail, String password) {
 
 
         UserEntity userEntity = userDao.getGmail(gmail);
@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
 
                 System.out.println("Login SuccessFully");
                 System.out.println(signUpDto);
-                return true;
+                return signUpDto;
             } else {
                 System.out.println("Invalid Password");
             }
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
 
         }
 
-        return false;
+        return null;
 
 
     }

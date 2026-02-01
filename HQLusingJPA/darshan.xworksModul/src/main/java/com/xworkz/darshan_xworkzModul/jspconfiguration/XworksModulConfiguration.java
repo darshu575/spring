@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -52,5 +53,12 @@ public class XworksModulConfiguration implements WebMvcConfigurer {
         localContainerEntityManagerFactoryBean.setJpaProperties(getJpaProperties());
         localContainerEntityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         return localContainerEntityManagerFactoryBean;
+    }
+    @Bean("multipartResolver")
+    public CommonsMultipartResolver commonsMultipartResolver(){
+        CommonsMultipartResolver commonsMultipartResolver=new CommonsMultipartResolver();
+        commonsMultipartResolver.setMaxUploadSize(104857);
+        commonsMultipartResolver.setMaxInMemorySize(104857);
+        return commonsMultipartResolver;
     }
 }

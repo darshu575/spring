@@ -2,24 +2,26 @@ package com.xworkz.darshan_xworkzModul.controler;
 
 import com.xworkz.darshan_xworkzModul.dao.UserDao;
 import com.xworkz.darshan_xworkzModul.dto.SignUpDto;
+import com.xworkz.darshan_xworkzModul.dto.memberDto.MemberDto;
+import com.xworkz.darshan_xworkzModul.dto.teamDto.TeamDto;
 import com.xworkz.darshan_xworkzModul.entity.OtpEntity;
 import com.xworkz.darshan_xworkzModul.service.EmailService;
+import com.xworkz.darshan_xworkzModul.service.TeamServices.TeamService;
 import com.xworkz.darshan_xworkzModul.service.UserService;
+import com.xworkz.darshan_xworkzModul.service.memberServices.MemberServices;
 import com.xworkz.darshan_xworkzModul.util.OtpUtil;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.jws.WebParam;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -30,6 +32,10 @@ public class UserControler {
     UserDao userDao;
     @Autowired
     EmailService emailService;
+    @Autowired
+    TeamService teamService;
+    @Autowired
+    MemberServices memberServices;
 
     public UserControler() {
         System.out.println("User Controler is Created");
@@ -44,6 +50,24 @@ public class UserControler {
     @GetMapping("signIn")
     public String signIn() {
         return "Login.jsp";
+    }
+
+    @GetMapping("dashboard")
+    public String dashboard() {
+        return "DashBoard.jsp";
+    }
+
+
+    @GetMapping("addTeam")
+    public String addTeams() {
+        return "AddTeams.jsp";
+    }
+
+    @GetMapping("/addMember")
+    public ModelAndView addMember(@RequestParam int teamId) {
+        ModelAndView mav = new ModelAndView("addMember.jsp");
+        mav.addObject("teamId", teamId);
+        return mav;
     }
 
 
@@ -87,8 +111,7 @@ public class UserControler {
             }
 
             if (bindingResult.hasFieldErrors("address")) {
-                mv.addObject("AddressError",
-                        bindingResult.getFieldError("address").getDefaultMessage());
+                mv.addObject("AddressError", bindingResult.getFieldError("address").getDefaultMessage());
             }
 
 
@@ -121,8 +144,7 @@ public class UserControler {
                 if (isSaved) {
                     mv.setViewName("Result.jsp");
                     return mv;
-                } else
-                    mv.setViewName("Error.jsp");
+                } else mv.setViewName("Error.jsp");
                 return mv;
             } else System.out.println("Data Is Not Valid");
         }
@@ -131,20 +153,22 @@ public class UserControler {
 
 
     @PostMapping("loginGamil")
-    public String getGmailAndPassword(@RequestParam("email") String gmail, @RequestParam("password") String
-            password, Model model) {
+    public String getGmailAndPassword(@RequestParam("email") String gmail, @RequestParam("password") String password, Model model, HttpSession session) {
 
         System.out.println(gmail);
         System.out.println(password);
 
-        Boolean isCorrect = userService.getGmailAndPassword(gmail, password);
-        if (isCorrect) {
+        SignUpDto signUpDto = userService.getPasswordByGmail(gmail, password);
+        System.out.println(signUpDto);
+
+        session.setAttribute("user", signUpDto);
+
+        if (signUpDto != null) {
             userService.updateCount(gmail);
             return "Home.jsp";
-
         } else {
             model.addAttribute("Error", "Invalid Email And Password");
-            model.addAttribute("email", gmail);
+            session.setAttribute("email", gmail);
             int isGet = userService.getCount(gmail);
             if (isGet >= 2) {
                 model.addAttribute("disable", true);
@@ -159,74 +183,120 @@ public class UserControler {
         }
 
     }
-@PostMapping("/sendOtp")
-public ModelAndView otpPage(@RequestParam String email){
-    System.out.println("sendOtp started");
-        String otp= OtpUtil.generateOtp();
-    System.out.println(otp);
 
-   OtpEntity otpEntity=new OtpEntity();
-    otpEntity.setEmail(email);
-    otpEntity.setOtp(otp);
-    otpEntity.setCreatedTime(LocalDateTime.now());
+    @PostMapping("/sendOtp")
+    public ModelAndView otpPage(@RequestParam String email) {
+        System.out.println("sendOtp started");
+        String otp = OtpUtil.generateOtp();
+        System.out.println(otp);
 
-    emailService.sendOtp(email,otp);
+        OtpEntity otpEntity = new OtpEntity();
+        otpEntity.setEmail(email);
+        otpEntity.setOtp(otp);
+        otpEntity.setCreatedTime(LocalDateTime.now());
 
-    userDao.saveOtp(otpEntity);
+        emailService.sendOtp(email, otp);
 
-
-    ModelAndView modelAndView=new ModelAndView();
-    modelAndView.addObject("email",email);
-    modelAndView.setViewName("Otp.jsp");
-    System.out.println("sendOtp started");
-    return modelAndView;
-
-}
-@PostMapping("/verifyOtp")
-public  ModelAndView verifyOtp(@RequestParam String email,@RequestParam String otp){
-    System.out.println("VerifyOtp started");
-          OtpEntity dbOtp=userDao.findOtpByGmail(email,otp);
+        userDao.saveOtp(otpEntity);
 
 
-          if (dbOtp!=null && dbOtp.getOtp().equals(otp)){
-            userDao.deleteOpt(dbOtp);
-
-              ModelAndView mv=new ModelAndView();
-              mv.addObject("reSetEmail",email);
-              mv.setViewName("ReSetPassord.jsp");
-              return  mv;
-          }
-
-          ModelAndView modelAndView=new ModelAndView();
-          modelAndView.addObject("error","Invalid Otp");
-          modelAndView.addObject("email",email);
-          modelAndView.setViewName("Otp.jsp");
-    System.out.println("VerifyOtp ended");
-          return modelAndView;
-
-}
-@PostMapping("/reSetPassword")
-private ModelAndView passwordReSet(@RequestParam("newemail") String email,@RequestParam("newPassword") String newPassword,@RequestParam("confirmPassword") String ConfirmPassword,ModelAndView modelAndView) throws Exception {
-    System.out.println(email);
-    System.out.println(newPassword);
-    System.out.println(ConfirmPassword);
-
-   boolean isUpadate= userService.updatePassword(email,newPassword,ConfirmPassword);
-    if (isUpadate){
-        userService.updateCount(email);
-        modelAndView.setViewName("Home.jsp");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("email", email);
+        modelAndView.setViewName("Otp.jsp");
+        System.out.println("sendOtp ended");
         return modelAndView;
-    }else
-    {
-        modelAndView.addObject("ErrorPassord","Password Not Match");
+
     }
 
-    
+    @PostMapping("/verifyOtp")
+    public ModelAndView verifyOtp(@RequestParam String email, @RequestParam String otp) {
+        System.out.println("VerifyOtp started");
+        OtpEntity dbOtp = userDao.findOtpByGmail(email, otp);
 
 
-    return null;
-}
+        if (dbOtp != null && dbOtp.getOtp().equals(otp)) {
+            userDao.deleteOpt(dbOtp);
+
+            ModelAndView mv = new ModelAndView();
+            mv.addObject("reSetEmail", email);
+            mv.setViewName("ReSetPassord.jsp");
+            return mv;
+        }
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("error", "Invalid Otp");
+        modelAndView.addObject("email", email);
+        modelAndView.setViewName("Otp.jsp");
+        System.out.println("VerifyOtp ended");
+        return modelAndView;
+
+    }
+
+    @PostMapping("/reSetPassword")
+    private ModelAndView passwordReSet(@RequestParam("newEmail") String email, @RequestParam("newPassword") String newPassword, @RequestParam("confirmPassword") String ConfirmPassword, ModelAndView modelAndView) throws Exception {
+        System.out.println(email);
+        System.out.println(newPassword);
+        System.out.println(ConfirmPassword);
+
+        boolean isUpadate = userService.updatePassword(email, newPassword, ConfirmPassword);
+        if (isUpadate) {
+            userService.updateCount(email);
+            modelAndView.setViewName("Login.jsp");
+            return modelAndView;
+        } else {
+            modelAndView.addObject("ErrorPassord", "Password Not Match");
+        }
 
 
+        return null;
+    }
+
+    @PostMapping("/addTeam")
+    public ModelAndView addTeams(TeamDto teamDto, ModelAndView modelAndView) {
+
+        System.out.println(teamDto);
+        boolean isSaved = teamService.addTeamsAndSave(teamDto);
+        if (isSaved) {
+            modelAndView.addObject("successMessage", "Team Added Successufully");
+        } else {
+            modelAndView.addObject("NotSaved", "Team Not Added");
+        }
+        modelAndView.setViewName("AddTeams.jsp");
+        return modelAndView;
+    }
+
+    @GetMapping("/getViewTeam")
+    public ModelAndView getAllTeams(ModelAndView modelAndView) {
+
+        System.out.println("GetViewTeam Controller ");
+        List<TeamDto> teams = teamService.getAllteams();
+        modelAndView.addObject("dto", teams);
+        modelAndView.setViewName("ViewTeams.jsp");
+        return modelAndView;
+
+    }
+
+    @PostMapping("/saveMember")
+    public ModelAndView addMember(MemberDto memberDto, ModelAndView modelAndView) {
+        System.out.println("addMember controller");
+        System.out.println(memberDto);
+        boolean isSaved = memberServices.savememberDetails(memberDto);
+        if (isSaved) {
+            modelAndView.addObject("successMessage", "Member Added Successufullty");
+        } else {
+            modelAndView.addObject("error", "Member Not Added");
+        }
+        modelAndView.setViewName("addMember.jsp");
+        return modelAndView;
+    }
+@GetMapping("/getViewMember")
+    public ModelAndView getAllMember(ModelAndView modelAndView, @RequestParam int teamId){
+        System.out.println("getAll Member Controller");
+    System.out.println(teamId);
+        List<MemberDto> members=memberServices.getAllMemberById(teamId);
+        modelAndView.addObject("memberDto",members);
+        modelAndView.setViewName("ViewMember.jsp");
+        return modelAndView;
+    }
 
 }

@@ -6,7 +6,7 @@ public interface UserService {
     boolean ValidateAndSave(SignUpDto signUpDto) throws Exception;
 
 
-    Boolean  getGmailAndPassword(String gmail, String password);
+    SignUpDto getPasswordByGmail(String gmail, String password);
 
     int getCount(String gmail);
 

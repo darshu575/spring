@@ -53,28 +53,29 @@
             </form>
 
             <!-- Form to verify OTP -->
+            <!-- Form to verify OTP -->
             <form action="verifyOtp" method="post" onsubmit="return validateOTP()">
-                <input type="hidden" name="email" value="${email}"> <!-- Pass email again -->
+
+                <!-- IMPORTANT: Hidden Email Field -->
+                <input type="hidden" name="email" value="${email}"/>
 
                 <div class="mb-3">
                     <label>Enter OTP</label>
                     <input type="text" class="form-control" id="otp" name="otp"
                            placeholder="Enter OTP" required>
+
                     <small class="text-danger">${error}</small>
                     <small class="text-danger" id="otpError"></small>
                 </div>
+
                 <div class="d-grid">
                     <button type="submit" class="btn btn-warning fw-bold">
                         Verify & Login
                     </button>
                 </div>
 
-                <div class="text-center mt-3">
-                    <small>Don't have an account?
-                        <a href="Register.jsp" class="text-decoration-none">Sign Up</a>
-                    </small>
-                </div>
             </form>
+
 
         </div>
     </div>
