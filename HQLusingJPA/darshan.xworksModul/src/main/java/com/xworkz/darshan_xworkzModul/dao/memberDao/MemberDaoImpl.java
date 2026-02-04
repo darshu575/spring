@@ -28,11 +28,12 @@ public class MemberDaoImpl implements MemberDao{
 
     @Override
     public List<MemberEntity> getAllMemberById(int teamId) {
-
+        System.out.println("GetAllMamber by id");
         EntityManager entityManager=entityManagerFactory.createEntityManager();
-       Query query= entityManager.createQuery("SELECT m FROM MemberEntity m WHERE m.team.teamId = :teamid");
-       query.setParameter("teamid",teamId);
+       Query query= entityManager.createQuery( "FROM MemberEntity m WHERE m.team.teamId = :teamId");
+       query.setParameter("teamId",teamId);
        List<MemberEntity> member=query.getResultList();
+        System.out.println(member);
        entityManager.close();
         return member;
     }

@@ -11,15 +11,20 @@ import com.xworkz.darshan_xworkzModul.service.UserService;
 import com.xworkz.darshan_xworkzModul.service.memberServices.MemberServices;
 import com.xworkz.darshan_xworkzModul.util.OtpUtil;
 import lombok.SneakyThrows;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -277,26 +282,61 @@ public class UserControler {
     }
 
     @PostMapping("/saveMember")
-    public ModelAndView addMember(MemberDto memberDto, ModelAndView modelAndView) {
+    public ModelAndView addMember(@ModelAttribute MemberDto memberDto,
+                                  @RequestParam("profileImage") MultipartFile file,
+                                  ModelAndView modelAndView) {
         System.out.println("addMember controller");
         System.out.println(memberDto);
-        boolean isSaved = memberServices.savememberDetails(memberDto);
-        if (isSaved) {
-            modelAndView.addObject("successMessage", "Member Added Successufullty");
-        } else {
-            modelAndView.addObject("error", "Member Not Added");
+
+        try {
+
+            if (file != null && !file.isEmpty()) {
+                String uploadDir = "D:/member-images/";
+                String filePath = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+                File dest = new File(uploadDir + filePath);
+                file.transferTo(dest);
+                // Set file path in DTO
+                memberDto.setProfileImagePath("D:/member-images/"+filePath);
+            }
+
+            // Save member details including file path
+            boolean isSaved = memberServices.savememberDetails(memberDto);
+
+            if (isSaved) {
+                modelAndView.addObject("successMessage", "Member Added Successfully");
+            } else {
+                modelAndView.addObject("error", "Member Not Added");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            modelAndView.addObject("error", "Member Not Added: " + e.getMessage());
         }
+
         modelAndView.setViewName("addMember.jsp");
         return modelAndView;
     }
-@GetMapping("/getViewMember")
-    public ModelAndView getAllMember(ModelAndView modelAndView, @RequestParam int teamId){
+
+    @GetMapping("/getViewMember")
+    public ModelAndView getAllMember( @RequestParam int teamId,ModelAndView modelAndView) {
         System.out.println("getAll Member Controller");
-    System.out.println(teamId);
-        List<MemberDto> members=memberServices.getAllMemberById(teamId);
-        modelAndView.addObject("memberDto",members);
+        System.out.println(teamId);
+        List<MemberDto> members = memberServices.getAllMemberById(teamId);
+        System.out.println(members);
+        modelAndView.addObject("memberDto", members);
         modelAndView.setViewName("ViewMember.jsp");
         return modelAndView;
     }
+@GetMapping("download")
+public void getImage(HttpServletResponse response,@RequestParam String profileImage)throws IOException{
+    System.out.println(profileImage);
+    System.out.println("Get Image Controller");
+    File file=new File(profileImage);
+    InputStream inputStream=new BufferedInputStream(new FileInputStream(file));
+    ServletOutputStream servletOutputStream=response.getOutputStream();
+    IOUtils.copy(inputStream,servletOutputStream);
+    response.flushBuffer();
+}
+
 
 }

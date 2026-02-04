@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
+
 <!DOCTYPE html>
 
 <html>
@@ -151,27 +152,30 @@
 <div class="container my-5">
     <div class="row">
 
-       <c:forEach items="${memberDto}" var="member">
-           <div class="col-lg-4 col-md-6 mb-4">
-               <div class="card team-card h-100">
+    <c:forEach items="${memberDto}" var="member">
+        <div class="card mb-3 shadow-sm" style="max-width: 400px;">
+            <div class="row g-0">
 
-                   <div class="card-header">
-                       ${member.memberName}
-                   </div>
+                <div class="col-md-4 text-center p-2">
+                    <img src="download?profileImage=${member.profileImagePath}"
+                         style="width:100px;height:100px;object-fit:cover;border-radius:50%;"
+                         alt="Profile Image">
+                </div>
 
-                   <div class="card-body">
-                       <p><i class="bi bi-person"></i> <strong>Age:</strong> ${member.age}</p>
-                       <p><i class="bi bi-gender-ambiguous"></i> <strong>Gender:</strong> ${member.gender}</p>
-                       <p><i class="bi bi-envelope"></i> <strong>Email:</strong> ${member.email}</p>
-                       <p><i class="bi bi-telephone"></i> <strong>Contact:</strong> ${member.phoneNumber}</p>
-                   </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <p><strong>Age:</strong> ${member.age}</p>
+                        <p><strong>Gender:</strong> ${member.gender}</p>
+                        <p><strong>Email:</strong> ${member.email}</p>
+                        <p><strong>Contact:</strong> ${member.phoneNumber}</p>
+                    </div>
+                </div>
 
-                   <div class="card-footer text-center">
-                       <button class="btn">Message</button>
-                   </div>
-               </div>
-           </div>
-       </c:forEach>
+            </div>
+        </div>
+    </c:forEach>
+
+
 
 
     </div>

@@ -95,23 +95,9 @@
         </ul>
 
         <!-- ✅ UPLOAD FORM -->
-        <form action="uploadProfileImage"
-              method="post"
-              enctype="multipart/form-data">
-<label for="nameID">Name</label>
-            <input type="text" name="name" id="nameId">
 
-            <div class="mb-3">
-                <label class="form-label">Upload Profile Image</label>
-                <input type="file" id="profileImage" class="form-control" required>
-            </div>
 
-            <button type="submit" class="btn btn-primary w-100">
-                Upload Image
-            </button>
-        </form>
-
-        <a href="home.jsp" class="btn btn-secondary w-100 mt-3">
+        <a href="Home.jsp" class="btn btn-secondary w-100 mt-3">
             ← Back
         </a>
     </div>

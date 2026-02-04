@@ -1,5 +1,6 @@
 package com.xworkz.darshan_xworkzModul.jspconfiguration;
 
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class WebInit  extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -17,4 +18,5 @@ public class WebInit  extends AbstractAnnotationConfigDispatcherServletInitializ
     protected String[] getServletMappings() {
         return new String[]{"/"};
     }
+
 }

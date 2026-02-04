@@ -24,6 +24,8 @@ public class MemberServcesImpl implements MemberServices{
         System.out.println("Member added Service");
         MemberEntity entity=new MemberEntity();
         BeanUtils.copyProperties(memberDto,entity);
+
+        //this Line Write For ViewMember By Team ID
         TeamEntity team = teamDao.getId(memberDto.getTeamId());
         entity.setTeam(team);
 

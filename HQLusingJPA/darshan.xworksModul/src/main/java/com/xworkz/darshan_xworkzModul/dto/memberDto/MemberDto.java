@@ -3,6 +3,9 @@ package com.xworkz.darshan_xworkzModul.dto.memberDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.persistence.Transient;
 
 @Data
 @AllArgsConstructor
@@ -18,6 +21,11 @@ public class MemberDto {
     private long phoneNumber;
 
     private int teamId;
+
+    @Transient
+    private MultipartFile profileImage;
+
+    private String profileImagePath;
 
 
 }

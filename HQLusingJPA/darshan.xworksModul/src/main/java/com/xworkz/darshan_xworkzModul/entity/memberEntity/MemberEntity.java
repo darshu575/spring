@@ -22,6 +22,9 @@ public class MemberEntity {
     private String email;
     private long phoneNumber;
 
+    private String profileImagePath; // Store full path of file
+
+
     @ManyToOne
     @JoinColumn(name = "teamId")
 

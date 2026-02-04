@@ -120,10 +120,21 @@
         </div>
 
         <div class="card-body">
-            <form action="saveMember" method="post" id="memberForm" onsubmit="return validateMemberForm()">
+            <form action="saveMember" method="post" id="memberForm"  enctype="multipart/form-data" onsubmit="return validateMemberForm()">
 
                 <!-- Hidden teamId -->
                 <input type="hidden" name="teamId" value="${teamId}">
+
+                <!-- member image -->
+                  <div class="text-center mb-3">
+                        <label for="profileImageInput" style="cursor:pointer;">
+                            <img id="profileAvatar" src="profile.png"
+                                 class="rounded-circle shadow"
+                                 style="width:120px; height:120px; object-fit:cover;">
+                        </label>
+                        <input type="file" id="profileImageInput" name="profileImage" style="display:none;"
+                               onchange="previewProfileImage(this)">
+                    </div>
 
 
 
@@ -270,6 +281,17 @@
             validateEmail() &&
             validatePhone();
     }
+
+
+       function previewProfileImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profileAvatar').src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 </script>
 
 </body>

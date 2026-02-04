@@ -54,11 +54,17 @@ public class XworksModulConfiguration implements WebMvcConfigurer {
         localContainerEntityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         return localContainerEntityManagerFactoryBean;
     }
+
     @Bean("multipartResolver")
-    public CommonsMultipartResolver commonsMultipartResolver(){
-        CommonsMultipartResolver commonsMultipartResolver=new CommonsMultipartResolver();
-        commonsMultipartResolver.setMaxUploadSize(104857);
-        commonsMultipartResolver.setMaxInMemorySize(104857);
-        return commonsMultipartResolver;
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+        resolver.setMaxUploadSize(10485760); // 10MB
+        return resolver;
     }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/member-images/**")
+                .addResourceLocations("file:///D:/member-images/");
+    }
+
 }
