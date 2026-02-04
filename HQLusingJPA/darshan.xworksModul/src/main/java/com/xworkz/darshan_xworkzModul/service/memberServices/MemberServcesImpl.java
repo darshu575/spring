@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class MemberServcesImpl implements MemberServices{
+public class MemberServcesImpl implements MemberServices {
     @Autowired
     MemberDao memberDao;
     @Autowired
@@ -22,8 +22,8 @@ public class MemberServcesImpl implements MemberServices{
     @Override
     public boolean savememberDetails(MemberDto memberDto) {
         System.out.println("Member added Service");
-        MemberEntity entity=new MemberEntity();
-        BeanUtils.copyProperties(memberDto,entity);
+        MemberEntity entity = new MemberEntity();
+        BeanUtils.copyProperties(memberDto, entity);
 
         //this Line Write For ViewMember By Team ID
         TeamEntity team = teamDao.getId(memberDto.getTeamId());
@@ -35,14 +35,15 @@ public class MemberServcesImpl implements MemberServices{
     @Override
     public List<MemberDto> getAllMemberById(int teamId) {
 
-        List<MemberEntity> entities=memberDao.getAllMemberById(teamId);
-        if (entities==null || entities.isEmpty()){
+        List<MemberEntity> entities = memberDao.getAllMemberById(teamId);
+        if (entities == null || entities.isEmpty()) {
             return null;
         }
-        List<MemberDto> memberDtoList=new ArrayList<>();
-        for (MemberEntity entity:entities){
-            MemberDto dto=new MemberDto();
-            BeanUtils.copyProperties(entity,dto);
+        List<MemberDto> memberDtoList = new ArrayList<>();
+        for (MemberEntity entity : entities) {
+
+            MemberDto dto = new MemberDto();
+            BeanUtils.copyProperties(entity, dto);
             memberDtoList.add(dto);
         }
 

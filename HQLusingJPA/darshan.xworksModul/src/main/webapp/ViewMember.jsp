@@ -17,59 +17,27 @@
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-        .team-card {
-            border: none;
-            border-radius: 15px;
-            background: linear-gradient(145deg, #f0f3ff, #d9e0ff);
-            box-shadow: 8px 8px 20px #c5cbe5, -8px -8px 20px #ffffff;
-            transition: all 0.3s ease;
-            overflow: hidden;
+        .profile-img{
+            width:55px;
+            height:55px;
+            border-radius:50%;
+            object-fit:cover;
+            border:2px solid #dee2e6;
         }
 
-        .team-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 12px 12px 25px #b0b7d8, -12px -12px 25px #ffffff;
+        .member-table tbody tr{
+            transition: all .25s ease;
+            cursor:pointer;
         }
 
-        .team-card .card-header {
-            background: linear-gradient(90deg, #6a11cb, #2575fc);
-            color: #fff;
-            font-weight: 700;
-            font-size: 1.2rem;
-            text-align: center;
-            padding: 15px;
-            border-radius: 15px 15px 0 0;
+        .member-table tbody tr:hover{
+            transform: translateY(-4px);
+            box-shadow: 0 6px 18px rgba(0,0,0,.12);
+            background:#f9fbff;
         }
 
-        .team-card .card-body {
-            padding: 15px;
-        }
 
-        .team-card p {
-            margin-bottom: 10px;
-            color: #333;
-            font-size: 0.95rem;
-        }
 
-        .team-card i {
-            color: #2575fc;
-            margin-right: 6px;
-        }
-
-        .team-card button {
-            background: #2575fc;
-            color: white;
-            border-radius: 8px;
-            border: none;
-            padding: 6px 12px;
-            transition: all 0.3s ease;
-            margin-top: 8px;
-        }
-
-        .team-card button:hover {
-            background: #6a11cb;
-            transform: scale(1.05);
-        }
     </style>
 
 
@@ -148,32 +116,56 @@
     </div>
 </nav>
 
-<!-- PAGE CONTENT -->
-<div class="container my-5">
-    <div class="row">
+<!-- PAGE CONTENT --><div class="table-responsive shadow-lg rounded-4 bg-white p-3">
 
-    <c:forEach items="${memberDto}" var="member">
-        <div class="card mb-3 shadow-sm" style="max-width: 400px;">
-            <div class="row g-0">
+                     <table class="table align-middle table-hover member-table">
 
-                <div class="col-md-4 text-center p-2">
-                    <img src="download?profileImage=${member.profileImagePath}"
-                         style="width:100px;height:100px;object-fit:cover;border-radius:50%;"
-                         alt="Profile Image">
-                </div>
+                         <thead class="table-dark">
+                         <tr>
+                             <th>Photo</th>
+                             <th>Name</th>
+                             <th>Age</th>
+                             <th>Gender</th>
+                             <th>Email</th>
+                             <th>Contact</th>
+                             <th>Actions</th>
+                         </tr>
+                         </thead>
 
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <p><strong>Age:</strong> ${member.age}</p>
-                        <p><strong>Gender:</strong> ${member.gender}</p>
-                        <p><strong>Email:</strong> ${member.email}</p>
-                        <p><strong>Contact:</strong> ${member.phoneNumber}</p>
-                    </div>
-                </div>
+                         <tbody>
+                         <c:forEach items="${memberDto}" var="member">
+                             <tr class="member-row">
 
-            </div>
-        </div>
-    </c:forEach>
+                                 <td>
+                                     <img src="download?profileImage=${member.profileImagePath}"
+                                          class="profile-img">
+                                 </td>
+
+                                 <td class="fw-semibold">${member.memberName}</td>
+                                 <td>${member.age}</td>
+                                 <td>${member.gender}</td>
+                                 <td>${member.email}</td>
+                                 <td>${member.phoneNumber}</td>
+
+                                 <td>
+                                     <a href="editMember?id=${member.memberId}" class="btn btn-sm btn-outline-primary">
+                                         Edit
+                                     </a>
+                                     <a href="deleteMember?id=${member.memberId}"
+                                        class="btn btn-sm btn-outline-danger"
+                                        onclick="return confirm('Deactivate this member?')">
+                                         Delete
+                                     </a>
+                                 </td>
+
+                             </tr>
+                         </c:forEach>
+                         </tbody>
+
+                     </table>
+
+                     </div>
+
 
 
 
