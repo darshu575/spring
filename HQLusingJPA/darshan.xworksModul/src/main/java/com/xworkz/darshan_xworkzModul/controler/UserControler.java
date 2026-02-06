@@ -255,16 +255,31 @@ public class UserControler {
 
         return null;
     }
-
-    @PostMapping("/addTeam")
-    public ModelAndView addTeams(TeamDto teamDto, ModelAndView modelAndView) {
+    @PostMapping("/saveTeam")
+    public ModelAndView addTeams(@ModelAttribute TeamDto teamDto,@RequestParam("teamProfileImage") MultipartFile file,
+                                 ModelAndView modelAndView) {
 
         System.out.println(teamDto);
+
+        try {
+            if (file!=null || file.isEmpty()){
+                String uploadDir="D:/team-images/";
+                String filePath=System.currentTimeMillis()+"_" + file.getOriginalFilename();
+                File dest=new File(uploadDir+filePath);
+                file.transferTo(dest);
+
+                teamDto.setTeamProfileImagePath("D:/team-images/"+filePath);
+            }
+
         boolean isSaved = teamService.addTeamsAndSave(teamDto);
         if (isSaved) {
             modelAndView.addObject("successMessage", "Team Added Successufully");
         } else {
             modelAndView.addObject("NotSaved", "Team Not Added");
+        }
+        }catch (Exception e){
+            e.printStackTrace();
+
         }
         modelAndView.setViewName("AddTeams.jsp");
         return modelAndView;

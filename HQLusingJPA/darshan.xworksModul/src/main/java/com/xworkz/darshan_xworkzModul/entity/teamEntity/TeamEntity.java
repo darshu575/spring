@@ -31,4 +31,8 @@ public class TeamEntity {
     private List<MemberEntity> members;
 
 
+    private String teamProfileImagePath;
+
+
+
 }

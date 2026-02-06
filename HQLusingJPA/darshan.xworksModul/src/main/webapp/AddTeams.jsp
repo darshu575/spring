@@ -128,7 +128,18 @@
           </div>
 
           <div class="card-body">
-<form action="addTeam" method="post" id="teamForm" onsubmit="return validateTeamForm()">
+<form action="saveTeam" method="post" id="teamForm"  enctype="multipart/form-data" onsubmit="return validateTeamForm()">
+                <!-- member image -->
+
+   <div class="text-center mb-3">
+                        <label for="profileImageInput" style="cursor:pointer;">
+                            <img id="profileAvatar" src="profile.png"
+                                 class="rounded-circle shadow"
+                                 style="width:120px; height:120px; object-fit:cover;">
+                        </label>
+                        <input type="file" id="profileImageInput" name="teamProfileImage" style="display:none;"
+                               onchange="previewProfileImage(this)">
+                    </div>
 
     <!-- Team Name -->
     <div class="row mb-2 align-items-center">
@@ -266,6 +277,15 @@ function validateTeamForm() {
         validateEmail()
     );
 }
+   function previewProfileImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profileAvatar').src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 </script>
 
 
