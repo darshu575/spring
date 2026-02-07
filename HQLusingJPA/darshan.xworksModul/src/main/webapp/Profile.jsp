@@ -82,7 +82,10 @@
 
     <div class="profile-body">
 
-        <img src="profile.png" alt="Profile">
+
+ <div class="text-center">
+                        <img src="download?profileImage=${user.userProfilePath}" class="pro-img">
+                    </div>
 
         <h5 class="text-center mt-2 fw-bold">${user.userName}</h5>
 

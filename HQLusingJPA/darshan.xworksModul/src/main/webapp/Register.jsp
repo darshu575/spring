@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html>
@@ -18,7 +18,12 @@
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">MyApp</a>
+
+<a class="navbar-brand d-flex align-items-center" href="#">
+            <!-- Replace with your logo link -->
+            <img src="Logo.png" alt="Logo" width="50" class="me-2">
+
+        </a>        <a class="navbar-brand" href="#">MyApp</a>
 
         <div class="ms-auto">
             <form action="signIn" method="get" class="d-inline">
@@ -42,7 +47,18 @@
                 </div>
 
                 <div class="card-body">
-                    <form action="registerDetails" method="post" onsubmit="return validateForm()">
+                    <form action="registerDetails" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+
+         <div class="text-center mb-3">
+                             <label for="profileImageInput" style="cursor:pointer;">
+                                 <img id="profileAvatar" src="profile.png"
+                                      class="rounded-circle shadow"
+                                      style="width:120px; height:120px; object-fit:cover;">
+                             </label>
+                             <input type="file" id="profileImageInput" name="userProfileImage" style="display:none;"
+                                    onchange="previewProfileImage(this)">
+                         </div>
+
 
                         <!-- Name -->
                         <div class="mb-2">
@@ -278,8 +294,20 @@ function validateForm() {
         validateConfirmPassword()
     );
 }
+
+       function previewProfileImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profileAvatar').src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 </script>
 
 
 </body>
 </html>
+
+
