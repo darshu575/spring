@@ -23,4 +23,6 @@ public class UserEntity {
     private  String confirmPassword;
     private int count;
 
+    private String userProfilePath;
+
 }
