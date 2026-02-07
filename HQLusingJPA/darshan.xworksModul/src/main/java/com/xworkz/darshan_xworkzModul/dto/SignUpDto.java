@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.Transient;
 import javax.validation.constraints.*;
 
 @Data
@@ -45,6 +47,11 @@ public class SignUpDto {
 
     @NotBlank(message = "ConfirmPassword is Required")
     private String confirmPassword;
+
+    @Transient
+    private MultipartFile userProfileImage;
+
+    private String userProfilePath;
 
 
 }

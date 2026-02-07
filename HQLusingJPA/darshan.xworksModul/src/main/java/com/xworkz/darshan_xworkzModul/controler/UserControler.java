@@ -78,7 +78,8 @@ public class UserControler {
 
     @SneakyThrows
     @PostMapping("/registerDetails")
-    public ModelAndView registerUser(@Valid SignUpDto signUpDto, BindingResult bindingResult, ModelAndView mv) {
+    public ModelAndView registerUser(@ModelAttribute @Valid  SignUpDto signUpDto, BindingResult bindingResult,
+                                     @RequestParam("userProfileImage") MultipartFile file, ModelAndView mv) {
 
 //        boolean isSaved = userService.ValidateAndSave(signUpDto);
 //
@@ -135,7 +136,16 @@ public class UserControler {
             }
             mv.setViewName("Register.jsp");
             return mv;
-        } else {
+        }
+        try {
+            if (file != null || file.isEmpty()) {
+                String uploadDir = "D:/signUp-images/";
+                String filePath = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+                File dest = new File(uploadDir + filePath);
+                file.transferTo(dest);
+
+                signUpDto.setUserProfilePath("D:/signUp-images/" + filePath);
+            }
 //        if (bindingResult.hasErrors()) {
 //            bindingResult.getFieldErrors().forEach(error ->
 //                    mv.addObject(error.getField() + "Error",
@@ -152,13 +162,18 @@ public class UserControler {
                 } else mv.setViewName("Error.jsp");
                 return mv;
             } else System.out.println("Data Is Not Valid");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return mv;
     }
 
 
     @PostMapping("loginGamil")
-    public String getGmailAndPassword(@RequestParam("email") String gmail, @RequestParam("password") String password, Model model, HttpSession session) {
+    public String getGmailAndPassword(@RequestParam("email") String gmail, @RequestParam("password") String
+            password, Model model, HttpSession session) {
 
         System.out.println(gmail);
         System.out.println(password);
@@ -238,7 +253,9 @@ public class UserControler {
     }
 
     @PostMapping("/reSetPassword")
-    private ModelAndView passwordReSet(@RequestParam("newEmail") String email, @RequestParam("newPassword") String newPassword, @RequestParam("confirmPassword") String ConfirmPassword, ModelAndView modelAndView) throws Exception {
+    private ModelAndView passwordReSet(@RequestParam("newEmail") String email, @RequestParam("newPassword") String
+            newPassword, @RequestParam("confirmPassword") String ConfirmPassword, ModelAndView modelAndView) throws
+            Exception {
         System.out.println(email);
         System.out.println(newPassword);
         System.out.println(ConfirmPassword);
@@ -255,29 +272,31 @@ public class UserControler {
 
         return null;
     }
+
     @PostMapping("/saveTeam")
-    public ModelAndView addTeams(@ModelAttribute TeamDto teamDto,@RequestParam("teamProfileImage") MultipartFile file,
+    public ModelAndView addTeams(@ModelAttribute TeamDto teamDto, @RequestParam("teamProfileImage") MultipartFile
+                                         file,
                                  ModelAndView modelAndView) {
 
         System.out.println(teamDto);
 
         try {
-            if (file!=null || file.isEmpty()){
-                String uploadDir="D:/team-images/";
-                String filePath=System.currentTimeMillis()+"_" + file.getOriginalFilename();
-                File dest=new File(uploadDir+filePath);
+            if (file != null || file.isEmpty()) {
+                String uploadDir = "D:/team-images/";
+                String filePath = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+                File dest = new File(uploadDir + filePath);
                 file.transferTo(dest);
 
-                teamDto.setTeamProfileImagePath("D:/team-images/"+filePath);
+                teamDto.setTeamProfileImagePath("D:/team-images/" + filePath);
             }
 
-        boolean isSaved = teamService.addTeamsAndSave(teamDto);
-        if (isSaved) {
-            modelAndView.addObject("successMessage", "Team Added Successufully");
-        } else {
-            modelAndView.addObject("NotSaved", "Team Not Added");
-        }
-        }catch (Exception e){
+            boolean isSaved = teamService.addTeamsAndSave(teamDto);
+            if (isSaved) {
+                modelAndView.addObject("successMessage", "Team Added Successufully");
+            } else {
+                modelAndView.addObject("NotSaved", "Team Not Added");
+            }
+        } catch (Exception e) {
             e.printStackTrace();
 
         }
@@ -311,7 +330,7 @@ public class UserControler {
                 File dest = new File(uploadDir + filePath);
                 file.transferTo(dest);
                 // Set file path in DTO
-                memberDto.setProfileImagePath("D:/member-images/"+filePath);
+                memberDto.setProfileImagePath("D:/member-images/" + filePath);
             }
 
             // Save member details including file path
@@ -333,7 +352,7 @@ public class UserControler {
     }
 
     @GetMapping("/getViewMember")
-    public ModelAndView getAllMember( @RequestParam int teamId,ModelAndView modelAndView) {
+    public ModelAndView getAllMember(@RequestParam int teamId, ModelAndView modelAndView) {
         System.out.println("getAll Member Controller");
         System.out.println(teamId);
         List<MemberDto> members = memberServices.getAllMemberById(teamId);
@@ -342,16 +361,17 @@ public class UserControler {
         modelAndView.setViewName("ViewMember.jsp");
         return modelAndView;
     }
-@GetMapping("download")
-public void getImage(HttpServletResponse response,@RequestParam String profileImage)throws IOException{
-    System.out.println(profileImage);
-    System.out.println("Get Image Controller");
-    File file=new File(profileImage);
-    InputStream inputStream=new BufferedInputStream(new FileInputStream(file));
-    ServletOutputStream servletOutputStream=response.getOutputStream();
-    IOUtils.copy(inputStream,servletOutputStream);
-    response.flushBuffer();
-}
+
+    @GetMapping("download")
+    public void getImage(HttpServletResponse response, @RequestParam String profileImage) throws IOException {
+        System.out.println(profileImage);
+        System.out.println("Get Image Controller");
+        File file = new File(profileImage);
+        InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+        ServletOutputStream servletOutputStream = response.getOutputStream();
+        IOUtils.copy(inputStream, servletOutputStream);
+        response.flushBuffer();
+    }
 
 
 }
