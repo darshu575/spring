@@ -99,7 +99,9 @@
 
         <!-- ✅ UPLOAD FORM -->
 
-
+ <a href="getUserDetails?userEmail=${user.email}" class="btn btn-secondary w-100 mt-3">
+           Edit
+        </a>
         <a href="Home.jsp" class="btn btn-secondary w-100 mt-3">
             ← Back
         </a>

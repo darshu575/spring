@@ -78,7 +78,7 @@ public class UserControler {
 
     @SneakyThrows
     @PostMapping("/registerDetails")
-    public ModelAndView registerUser(@ModelAttribute @Valid  SignUpDto signUpDto, BindingResult bindingResult,
+    public ModelAndView registerUser(@ModelAttribute @Valid SignUpDto signUpDto, BindingResult bindingResult,
                                      @RequestParam("userProfileImage") MultipartFile file, ModelAndView mv) {
 
 //        boolean isSaved = userService.ValidateAndSave(signUpDto);
@@ -373,5 +373,40 @@ public class UserControler {
         response.flushBuffer();
     }
 
+    @GetMapping("/getUserDetails")
+    public ModelAndView editProfileDetails(@RequestParam("userEmail") String email, ModelAndView modelAndView) {
+
+        System.out.println("editProfileDetails controller started ");
+        SignUpDto user = userService.getUserDetailsByEmail(email);
+
+
+        System.out.println("editProfileDetails controller getting data:" + user);
+        modelAndView.addObject("editeUser", user);
+        modelAndView.setViewName("UpdateProfile.jsp");
+        return modelAndView;
+
+    }
+    @PostMapping("/updateProfileInfo")
+  public ModelAndView updateUserDetails(@ModelAttribute  SignUpDto signUpDto,@RequestParam("userProfileImage") MultipartFile file, ModelAndView modelAndView) throws IOException {
+        System.out.println("updateUserDetails started");
+
+        if (file != null || file.isEmpty()) {
+            String uploadDir = "D:/signUp-images/";
+            String filePath = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            File dest = new File(uploadDir + filePath);
+            file.transferTo(dest);
+
+            signUpDto.setUserProfilePath("D:/signUp-images/" + filePath);
+        }
+        System.out.println(signUpDto);
+        boolean userDetailsUpdated=userService.updateUserDetails(signUpDto);
+        if (userDetailsUpdated){
+            modelAndView.addObject("updated","Updated successfully");
+        }else {
+            modelAndView.addObject("NotUpdated","Not Updated");
+        }
+modelAndView.setViewName("UpdateProfile.jsp");
+return modelAndView;
+    }
 
 }

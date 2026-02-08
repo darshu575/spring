@@ -20,7 +20,7 @@
     <div class="container">
 
         <!-- LOGO -->
-        <a class="navbar-brand d-flex align-items-center" href="#">
+
             <!-- Replace with your logo link -->
             <img src="Logo.png" alt="Logo" width="50" class="me-2">
 
