@@ -113,6 +113,36 @@ public class UserServiceImpl implements UserService {
         return isUpadate;
     }
 
+    @Override
+    public SignUpDto getUserDetailsByEmail(String email) {
+        System.out.println("getUserDetailsByEmail Services Started");
+        if (email!=null){
+            UserEntity entity= userDao.getUserDetailsByEmail(email);
+            if (entity!=null){
+                SignUpDto signUpDto=new SignUpDto();
+                BeanUtils.copyProperties(entity,signUpDto);
+                return signUpDto;
+
+            }
+        }else {
+            System.out.println("getUserDetailsByEmail services Not Getting Any Data");
+        }
+        return null;
+    }
+
+    @Override
+    public boolean updateUserDetails(SignUpDto signUpDto) {
+        System.out.println("updateUserDetails Service started");
+        if (signUpDto!=null){
+            UserEntity userEntity=new UserEntity();
+            BeanUtils.copyProperties(signUpDto,userEntity);
+
+            boolean updated=userDao.updateUserDetails(userEntity);
+            return updated;
+        }
+        return false;
+    }
+
     private String encrypt(String strToEncrypt) throws Exception {
         SecretKeySpec secretKey = new SecretKeySpec(SECRET_KEY.getBytes(), "AES");
 

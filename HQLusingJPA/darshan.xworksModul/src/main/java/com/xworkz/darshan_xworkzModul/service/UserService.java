@@ -17,4 +17,8 @@ public interface UserService {
 
     boolean updatePassword(String email, String newPassword, String confirmPassword) throws Exception;
 
+    SignUpDto getUserDetailsByEmail(String email);
+
+    boolean updateUserDetails(SignUpDto signUpDto);
+
 }
