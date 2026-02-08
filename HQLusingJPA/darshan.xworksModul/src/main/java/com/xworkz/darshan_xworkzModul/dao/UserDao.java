@@ -1,5 +1,6 @@
 package com.xworkz.darshan_xworkzModul.dao;
 
+import com.xworkz.darshan_xworkzModul.dto.SignUpDto;
 import com.xworkz.darshan_xworkzModul.entity.OtpEntity;
 import com.xworkz.darshan_xworkzModul.entity.UserEntity;
 import org.springframework.stereotype.Repository;
@@ -23,4 +24,10 @@ public interface UserDao  {
     void deleteOpt(OtpEntity dbOtp);
 
     boolean updatePassword(String email, String encryptNewPassowrd);
+
+    UserEntity getUserDetailsByEmail(String email);
+
+    boolean updateUserDetails(UserEntity userEntity);
+
+
 }

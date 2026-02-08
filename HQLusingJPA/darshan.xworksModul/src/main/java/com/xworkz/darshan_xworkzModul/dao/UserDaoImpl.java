@@ -152,4 +152,71 @@ public class UserDaoImpl implements UserDao {
         return false;
     }
 
+    @Override
+    public UserEntity getUserDetailsByEmail(String email) {
+
+        System.out.println("getUserDetailsByEmail Dao Started");
+
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+          Query query= entityManager.createQuery("FROM UserEntity e WHERE e.email = :getEmail");
+          query.setParameter("getEmail",email);
+         UserEntity users = (UserEntity) query.getSingleResult();
+            System.out.println("Get User Details in Dao "+users);
+
+return users;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        return null;
+    }
+
+    @Override
+    public boolean updateUserDetails(UserEntity userEntity) {
+        System.out.println("updateUserDetails DAo Started");
+
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createQuery(
+                    "UPDATE UserEntity u SET " +
+                            "u.userName = :name, " +
+                            "u.email = :uemail, " +
+                            "u.phoneNumber = :phone, " +
+                            "u.age = :age, " +
+                            "u.gender = :gender, " +
+                            "u.address = :address, " +
+                            "u.userProfilePath = :imagePath " +
+                            "WHERE u.email = :wemail"
+            );
+          query.setParameter("name",userEntity.getUserName());
+          query.setParameter("uemail",userEntity.getEmail());
+          query.setParameter("phone",userEntity.getPhoneNumber());
+          query.setParameter("age",userEntity.getAge());
+          query.setParameter("gender",userEntity.getGender());
+          query.setParameter("address",userEntity.getAddress());
+          query.setParameter("imagePath",userEntity.getUserProfilePath());
+          query.setParameter("wemail",userEntity.getEmail());
+          int updatedRows=query.executeUpdate();
+            entityManager.getTransaction().commit();
+            System.out.println("Updated rows is"+updatedRows);
+          if (updatedRows>0){
+              System.out.println("User Details Is Updated");
+              return true;
+          }
+
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }finally {
+            entityManager.close();
+        }
+
+
+        return false;
+    }
+
 }
