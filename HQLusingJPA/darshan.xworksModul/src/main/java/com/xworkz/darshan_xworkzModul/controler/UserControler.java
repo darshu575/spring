@@ -368,6 +368,7 @@ public class UserControler {
         System.out.println(profileImage);
         System.out.println("Get Image Controller");
         File file = new File(profileImage);
+        System.out.println(file);
         InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
         ServletOutputStream servletOutputStream = response.getOutputStream();
         IOUtils.copy(inputStream, servletOutputStream);
