@@ -13,10 +13,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
+
 <body class="bg-light">
 
 <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow" style="position: fixed; top: 0; width: 100%; z-index: 1000">
     <div class="container">
 
         <!-- LOGO -->
