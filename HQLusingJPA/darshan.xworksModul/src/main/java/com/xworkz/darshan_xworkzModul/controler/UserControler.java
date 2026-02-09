@@ -48,7 +48,7 @@ public class UserControler {
 
 
     @GetMapping("signUp")
-    public String signUp() {
+    public String signUp()   {
         return "Register.jsp";
     }
 
