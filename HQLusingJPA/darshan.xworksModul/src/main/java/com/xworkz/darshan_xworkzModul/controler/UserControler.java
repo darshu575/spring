@@ -328,6 +328,7 @@ public class UserControler {
                 String uploadDir = "D:/member-images/";
                 String filePath = System.currentTimeMillis() + "_" + file.getOriginalFilename();
                 File dest = new File(uploadDir + filePath);
+                System.out.println(dest);
                 file.transferTo(dest);
                 // Set file path in DTO
                 memberDto.setProfileImagePath("D:/member-images/" + filePath);
