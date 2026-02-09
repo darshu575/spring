@@ -380,7 +380,7 @@ public class UserControler {
 
         System.out.println("editProfileDetails controller started ");
         SignUpDto user = userService.getUserDetailsByEmail(email);
-
+        System.out.println(user);
 
         System.out.println("editProfileDetails controller getting data:" + user);
         modelAndView.addObject("editeUser", user);
