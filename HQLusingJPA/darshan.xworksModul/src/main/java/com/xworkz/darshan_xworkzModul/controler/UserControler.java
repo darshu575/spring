@@ -397,7 +397,7 @@ public class UserControler {
             String filePath = System.currentTimeMillis() + "_" + file.getOriginalFilename();
             File dest = new File(uploadDir + filePath);
             file.transferTo(dest);
-
+            System.out.println(file.getOriginalFilename());
             signUpDto.setUserProfilePath("D:/signUp-images/" + filePath);
         }
         System.out.println(signUpDto);
