@@ -87,7 +87,6 @@ public class UserControler {
                 mv.addObject("NameError", bindingResult.getFieldError("userName").getDefaultMessage());
             }
 
-
             if (bindingResult.hasFieldErrors("email")) {
                 mv.addObject("EmailError", bindingResult.getFieldError("email").getDefaultMessage());
 
