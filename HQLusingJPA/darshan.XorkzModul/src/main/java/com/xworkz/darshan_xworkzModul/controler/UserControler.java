@@ -48,7 +48,7 @@ public class UserControler {
 
 
     @GetMapping("signUp")
-    public String signUp()   {
+    public String signUp() {
         return "Register.jsp";
     }
 
@@ -68,13 +68,19 @@ public class UserControler {
         return "AddTeams.jsp";
     }
 
+//    @GetMapping("sendNotification")
+//    public  String sendNotification(){
+//        return "SendNotification.jsp";
+//    }
+
+
+
     @GetMapping("/addMember")
     public ModelAndView addMember(@RequestParam int teamId) {
         ModelAndView mav = new ModelAndView("addMember.jsp");
         mav.addObject("teamId", teamId);
         return mav;
     }
-
 
     @SneakyThrows
     @PostMapping("/registerDetails")
@@ -379,8 +385,9 @@ public class UserControler {
         return modelAndView;
 
     }
+
     @PostMapping("/updateProfileInfo")
-  public ModelAndView updateUserDetails(@ModelAttribute  SignUpDto signUpDto,@RequestParam("userProfileImage") MultipartFile file, ModelAndView modelAndView) throws IOException {
+    public ModelAndView updateUserDetails(@ModelAttribute SignUpDto signUpDto, @RequestParam("userProfileImage") MultipartFile file, ModelAndView modelAndView) throws IOException {
         System.out.println("updateUserDetails started");
 
         if (file != null || file.isEmpty()) {
@@ -392,14 +399,25 @@ public class UserControler {
             signUpDto.setUserProfilePath("D:/signUp-images/" + filePath);
         }
         System.out.println(signUpDto);
-        boolean userDetailsUpdated=userService.updateUserDetails(signUpDto);
-        if (userDetailsUpdated){
-            modelAndView.addObject("updated","Updated successfully");
-        }else {
-            modelAndView.addObject("NotUpdated","Not Updated");
+        boolean userDetailsUpdated = userService.updateUserDetails(signUpDto);
+        if (userDetailsUpdated) {
+            modelAndView.addObject("updated", "Updated successfully");
+        } else {
+            modelAndView.addObject("NotUpdated", "Not Updated");
         }
-modelAndView.setViewName("UpdateProfile.jsp");
-return modelAndView;
+        modelAndView.setViewName("UpdateProfile.jsp");
+        return modelAndView;
+    }
+
+    @GetMapping("/getEmails")
+    public  ModelAndView getMemberEmail(ModelAndView modelAndView){
+        System.out.println("getEmails Controller");
+        List<MemberDto> emails=memberServices.getAllemails();
+        System.out.println(emails);
+        modelAndView.addObject("memberEmails",emails);
+        modelAndView.setViewName("SendNotification.jsp");
+        return modelAndView;
+
     }
 
 }
