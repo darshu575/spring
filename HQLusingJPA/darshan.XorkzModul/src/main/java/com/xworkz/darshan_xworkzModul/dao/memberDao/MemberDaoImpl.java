@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -36,5 +37,18 @@ public class MemberDaoImpl implements MemberDao{
         System.out.println(member);
        entityManager.close();
         return member;
+    }
+
+    @Override
+    public List<MemberEntity> getAllMemberEmails() {
+
+
+        System.out.println("Getting all Member emails");
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        Query query=entityManager.createQuery(" From  MemberEntity e ");
+        List<MemberEntity> memberEmails= query.getResultList();
+        System.out.println(memberEmails);
+        entityManager.close();
+        return memberEmails;
     }
 }

@@ -103,29 +103,28 @@
         <a href="addTeam" class="btn btn-primary btn-lg">
             <i class="bi bi-plus-circle me-2"></i> Add Teams
         </a>
-
         <form action="getViewTeam" method="get" class="d-inline">
             <button type="submit" class="btn btn-success btn-lg">
                 <i class="bi bi-eye me-2"></i> View Teams
             </button>
         </form>
+         <a href="getEmails" class="btn btn-primary btn-lg">
+                    <i class="bi bi-plus-circle me-2"></i> Send Notification
+                </a>
+
+
+
     </div>
 </div>
-
-
-
-
-
-
-
-
 <!-- FOOTER -->
 <footer class="bg-dark text-light py-3 mt-auto">
     <div class="container text-center">
         <small>
             © 2026 MyApp |
+
             <a href="#" class="text-decoration-none text-secondary">Privacy Policy</a> |
             <a href="#" class="text-decoration-none text-secondary">Contact</a>
+
         </small>
     </div>
 </footer>
