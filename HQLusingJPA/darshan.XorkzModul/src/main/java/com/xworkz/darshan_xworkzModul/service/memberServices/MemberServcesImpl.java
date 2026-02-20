@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -48,5 +49,23 @@ public class MemberServcesImpl implements MemberServices {
         }
 
         return memberDtoList;
+    }
+
+    @Override
+    public List<MemberDto> getAllemails() {
+        List<MemberEntity > entities=memberDao.getAllMemberEmails();
+
+        if (entities==null || entities.isEmpty()){
+            return null;
+        }
+List<MemberDto> memberDtoEmailList=new ArrayList<>();
+        for (MemberEntity entity : entities){
+            MemberDto memberDto=new MemberDto();
+            BeanUtils.copyProperties(entity,memberDto);
+            memberDtoEmailList.add(memberDto);
+        }
+
+
+        return memberDtoEmailList;
     }
 }

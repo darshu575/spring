@@ -10,4 +10,5 @@ public interface MemberServices {
     List<MemberDto> getAllMemberById(int teamId);
 
 
+    List<MemberDto> getAllemails();
 }

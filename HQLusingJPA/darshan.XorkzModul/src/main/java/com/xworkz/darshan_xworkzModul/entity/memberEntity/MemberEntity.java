@@ -27,6 +27,5 @@ public class MemberEntity {
 
     @ManyToOne
     @JoinColumn(name = "teamId")
-
     private TeamEntity team;
 }
