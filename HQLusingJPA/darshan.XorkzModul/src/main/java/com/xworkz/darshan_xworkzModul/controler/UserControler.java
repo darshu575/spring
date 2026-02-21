@@ -419,5 +419,13 @@ public class UserControler {
         return modelAndView;
 
     }
+    @PostMapping("/sendAllEmails")
+    public String sendAllEmails(Model model) {
+
+        memberServices.sendEmailToAllMembers();
+
+        model.addAttribute("message", "Emails sent successfully!");
+        return "Dashboard";   // your jsp page name
+    }
 
 }

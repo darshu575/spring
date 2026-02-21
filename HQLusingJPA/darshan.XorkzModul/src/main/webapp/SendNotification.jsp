@@ -70,6 +70,7 @@
             <table class="table table-bordered table-hover align-middle text-center">
                 <thead>
                     <tr>
+                     <th>Member ID</th>
                         <th>Member Name</th>
 
 
@@ -82,11 +83,13 @@
                         <tr>
                             <td class="fw-semibold">${member.memberName}</td>
 
-
+                            <td>${member.memberId}</td>
                             <td>${member.email}</td>
                             <td>${member.teamId}</td>
                         </tr>
+
                     </c:forEach>
+
 
                     <c:if test="${empty memberEmails}">
                         <tr>
@@ -97,6 +100,12 @@
                     </c:if>
                 </tbody>
             </table>
+
+                <form action="sendAllEmails" method="post">
+                    <button type="submit" class="btn btn-danger mb-3">
+                        📧 Send Email To All Members
+                    </button>
+                </form>
         </div>
     </div>
 
