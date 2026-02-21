@@ -68,4 +68,19 @@ List<MemberDto> memberDtoEmailList=new ArrayList<>();
 
         return memberDtoEmailList;
     }
+@Override
+    public void sendEmailToAllMembers() {
+
+        List<MemberEntity> members = memberDao.getAllMemberEmails();
+
+        List<String> emailList = new ArrayList<>();
+
+        for(MemberEntity member : members) {
+            if(member.getEmail() != null) {
+                emailList.add(member.getEmail());
+            }
+        }
+
+        sendBulkEmail(emailList);
+    }
 }
