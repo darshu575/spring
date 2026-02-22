@@ -10,4 +10,6 @@ public interface MemberDao {
     List<MemberEntity> getAllMemberById(int teamId);
 
     List<MemberEntity> getAllMemberEmails();
+
+    MemberEntity findById(int memberId);
 }
