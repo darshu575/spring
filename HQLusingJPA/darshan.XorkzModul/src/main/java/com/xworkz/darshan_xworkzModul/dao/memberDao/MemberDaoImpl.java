@@ -51,4 +51,11 @@ public class MemberDaoImpl implements MemberDao{
         entityManager.close();
         return memberEmails;
     }
+
+    @Override
+    public MemberEntity findById(int memberId) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+
+        return entityManager.find(MemberEntity.class, memberId);
+    }
 }

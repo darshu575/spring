@@ -5,6 +5,7 @@ import com.xworkz.darshan_xworkzModul.dao.teamDao.TeamDao;
 import com.xworkz.darshan_xworkzModul.dto.memberDto.MemberDto;
 import com.xworkz.darshan_xworkzModul.entity.memberEntity.MemberEntity;
 import com.xworkz.darshan_xworkzModul.entity.teamEntity.TeamEntity;
+import com.xworkz.darshan_xworkzModul.service.EmailService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ public class MemberServcesImpl implements MemberServices {
     MemberDao memberDao;
     @Autowired
     private TeamDao teamDao;
+    @Autowired
+    EmailService emailService;
 
     @Override
     public boolean savememberDetails(MemberDto memberDto) {
@@ -68,19 +71,38 @@ List<MemberDto> memberDtoEmailList=new ArrayList<>();
 
         return memberDtoEmailList;
     }
+//@Override
+//    public void sendEmailToAllMembers() {
+//    System.out.println("Send Email To all Members started");
+//        List<MemberEntity> members = memberDao.getAllMemberEmails();
+//
+//        List<String> emailList = new ArrayList<>();
+//
+//        for(MemberEntity member : members) {
+//            if(member.getEmail() != null) {
+//                emailList.add(member.getEmail());
+//            }
+//        }
+//
+//       emailService.sendBulkEmail(emailList);
+//    System.out.println("Send Email To all Members ended");
+//    }
 @Override
-    public void sendEmailToAllMembers() {
+public void sendEmailToAllMembers() {
 
-        List<MemberEntity> members = memberDao.getAllMemberEmails();
+    System.out.println("Send Email To all Members started");
 
-        List<String> emailList = new ArrayList<>();
+    List<MemberEntity> members = memberDao.getAllMemberEmails();
 
-        for(MemberEntity member : members) {
-            if(member.getEmail() != null) {
-                emailList.add(member.getEmail());
-            }
-        }
+    emailService.sendBulkEmail(members);
 
-        sendBulkEmail(emailList);
+    System.out.println("Send Email To all Members ended");
+}
+
+    @Override
+    public MemberEntity findById(int memberId) {
+
+        return memberDao.findById(memberId);
+
     }
 }
