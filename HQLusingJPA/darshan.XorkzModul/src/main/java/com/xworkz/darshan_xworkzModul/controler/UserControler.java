@@ -3,12 +3,15 @@ package com.xworkz.darshan_xworkzModul.controler;
 import com.xworkz.darshan_xworkzModul.dao.UserDao;
 import com.xworkz.darshan_xworkzModul.dto.SignUpDto;
 import com.xworkz.darshan_xworkzModul.dto.memberDto.MemberDto;
+import com.xworkz.darshan_xworkzModul.dto.respondDto.RespondDto;
 import com.xworkz.darshan_xworkzModul.dto.teamDto.TeamDto;
 import com.xworkz.darshan_xworkzModul.entity.OtpEntity;
+import com.xworkz.darshan_xworkzModul.entity.memberEntity.MemberEntity;
 import com.xworkz.darshan_xworkzModul.service.EmailService;
 import com.xworkz.darshan_xworkzModul.service.TeamServices.TeamService;
 import com.xworkz.darshan_xworkzModul.service.UserService;
 import com.xworkz.darshan_xworkzModul.service.memberServices.MemberServices;
+import com.xworkz.darshan_xworkzModul.service.respondService.RespondService;
 import com.xworkz.darshan_xworkzModul.util.OtpUtil;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
@@ -425,7 +428,33 @@ public class UserControler {
         memberServices.sendEmailToAllMembers();
 
         model.addAttribute("message", "Emails sent successfully!");
-        return "Dashboard";   // your jsp page name
+        return "SendNotification.jsp";   // your jsp page name
     }
 
+    @GetMapping("/respond")
+    public String openRespondPage(@RequestParam("memberId") int memberId,
+                                  Model model) {
+
+        model.addAttribute("memberId", memberId);
+        MemberEntity member = memberServices.findById(memberId);
+
+        model.addAttribute("memberId", member.getMemberId());
+        model.addAttribute("memberName", member.getMemberName());
+        model.addAttribute("email", member.getEmail());
+        return "RespondForm.jsp";   // JSP name
+    }
+@Autowired
+    RespondService respondService;
+    @PostMapping("/saveResponse")
+private ModelAndView saveRespond(RespondDto respondDto,ModelAndView modelAndView){
+
+        System.out.println(respondDto);
+
+        Boolean isSaved= respondService.saveRespond(respondDto);
+        if (isSaved) {
+            modelAndView.addObject("SuccessMessage", "Respond Submit saveResponse!");
+            modelAndView.setViewName("RespondForm.jsp");
+        }
+return modelAndView;
+    }
 }
