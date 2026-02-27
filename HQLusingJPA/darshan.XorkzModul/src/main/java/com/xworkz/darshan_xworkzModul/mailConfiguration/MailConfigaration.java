@@ -9,11 +9,12 @@ import java.util.Properties;
 
 @Configuration
 public class MailConfigaration {
+
 @Bean
     public JavaMailSender javaMailSender(){
-    JavaMailSenderImpl mailSender=new JavaMailSenderImpl();
+    JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
     mailSender.setHost("smtp.gmail.com");
-    mailSender.setPort(587);
+    mailSender.setPort( 587 );
 
 
     mailSender.setUsername("darshanvo90@gmail.com");

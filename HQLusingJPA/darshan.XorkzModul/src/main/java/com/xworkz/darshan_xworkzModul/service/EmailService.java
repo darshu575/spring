@@ -32,7 +32,7 @@ public class EmailService {
             if(member.getEmail() != null) {
 
                 String responseLink =
-                        "http://10.211.142.41/xworksModul/respond?memberId="
+                        "https://mervin-pulpy-lindy.ngrok-free.dev/xworksModul/respond?memberId="
                                 + member.getMemberId();
 
                 SimpleMailMessage mailMessage = new SimpleMailMessage();
