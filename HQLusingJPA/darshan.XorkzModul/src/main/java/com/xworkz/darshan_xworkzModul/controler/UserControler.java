@@ -46,7 +46,7 @@ public class UserControler {
     MemberServices memberServices;
 
     public UserControler() {
-        System.out.println("User Controler is Created");
+        System.out.println("User Controller is Created");
     }
 
 
@@ -292,7 +292,7 @@ public class UserControler {
 
             boolean isSaved = teamService.addTeamsAndSave(teamDto);
             if (isSaved) {
-                modelAndView.addObject("successMessage", "Team Added Successufully");
+                modelAndView.addObject("successMessage", "Team Added Successfully");
             } else {
                 modelAndView.addObject("NotSaved", "Team Not Added");
             }
