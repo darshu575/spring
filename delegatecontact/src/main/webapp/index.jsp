@@ -25,41 +25,38 @@
         }
 
         /* NAVBAR */
-        .navbar {
-            transition: 0.4s;
-            background: transparent;
-    background-color: #4da6ff !important;
+       /* NAVBAR FIXED */
+       .navbar {
+           background-color: #4da6ff !important;
+           padding: 12px 0;
        }
 
-        .navbar.scrolled {
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
-        }
+       .navbar-brand {
+           display: flex;
+           align-items: center;
+           font-weight: 600;
+           font-size: 20px;
+           color: black !important;
+       }
 
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            font-weight: 700;
-            color: black !important;
-            font-size: 25px;
-            font-height: 1000px;
-        }
+       .navbar-brand img {
+           height: 35px;
+           margin-right: 8px;
+       }
 
-        .navbar-brand img {
-            height: 40px;
-            margin-right: 10px;
+       .navbar-nav {
+           align-items: center;
+       }
 
-        }
+       .nav-link {
+           color: black !important;
+           margin-left: 25px;
+           font-weight: 500;
+       }
 
-        .nav-link {
-            color: white !important;
-            margin-left: 20px;
-        }
-
-        .nav-link:hover {
-            color: #00d4ff !important;
-        }
-
+       .nav-link:hover {
+           color: #003366 !important;
+       }
         /* HERO */
         .hero {
             height: 100vh;
@@ -97,6 +94,7 @@
             font-size: 30px;
             color: white;
             animation: bounce 2s infinite;
+
         }
 
         @keyframes bounce {
@@ -129,31 +127,35 @@
 
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="#">
-            <img src="Logo.png" alt="Logo">
-            DelegateContact
-        </a>
+<!-- NAVBAR --><nav class="navbar navbar-expand-lg navbar-light fixed-top">
+                   <div class="container">
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+                       <!-- LOGO -->
+                       <a class="navbar-brand" href="#">
+                           <img src="Logo.png" alt="Logo">
+                           DelegateContact
+                       </a>
 
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Events</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
-                <li class="nav-item">
-                    <a class="nav-link btn btn-info text-dark ms-3 px-3" href="#">Register</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+                       <!-- TOGGLER -->
+                       <button class="navbar-toggler" type="button"
+                               data-bs-toggle="collapse"
+                               data-bs-target="#navbarNav">
+                           <span class="navbar-toggler-icon"></span>
+                       </button>
+
+
+                       <!-- MENU -->
+                       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                           <div class="navbar-nav">
+                               <a class="nav-link" href="#">Home</a>
+                               <a class="nav-link" href="#">Events</a>
+                               <a class="nav-link" href="#">Login</a>
+                               <a class="btn btn-dark ms-4 px-4" href="#">Register</a>
+                           </div>
+                       </div>
+
+                   </div>
+               </nav>
 
 <!-- HERO -->
 <section class="hero">
