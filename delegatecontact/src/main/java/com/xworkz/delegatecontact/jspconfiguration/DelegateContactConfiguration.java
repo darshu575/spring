@@ -11,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -62,6 +63,15 @@ public LocalContainerEntityManagerFactoryBean getEntityManagerFactoryBean(){
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/member-images/**")
                 .addResourceLocations("file:///D:/member-images/");
+    }
+
+    @Bean
+    public InternalResourceViewResolver viewResolver() {
+        InternalResourceViewResolver resolver =
+                new InternalResourceViewResolver();
+        resolver.setPrefix("/");
+        resolver.setSuffix(".jsp");
+        return resolver;
     }
 
 
