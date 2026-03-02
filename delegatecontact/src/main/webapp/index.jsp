@@ -527,7 +527,5 @@ function toggleEventFields() {
     }
 }
 </script>
-
-
 </body>
 </html>

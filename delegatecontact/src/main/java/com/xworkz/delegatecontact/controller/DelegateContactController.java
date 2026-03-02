@@ -15,15 +15,16 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/")
 public class DelegateContactController {
 
-    public DelegateContactController(){
+    public DelegateContactController() {
         System.out.println("DelegateContactController Started");
     }
+
     @Autowired
     AdminService adminService;
 
     @GetMapping("/loginForm")
     public String loginPage() {
-        return "adminLogin.jsp";
+        return "adminLogin";
     }
 
 
@@ -41,9 +42,32 @@ public class DelegateContactController {
 
         if (valid) {
             session.setAttribute("admin", email);
-            return "adminDashboard.jsp";
+            return "adminDashboard";
         } else {
             model.addAttribute("error", "Invalid Email or Password");
-            return "adminLogin.jsp";
+            return "adminLogin";
         }
-    }}
+    }
+
+    @GetMapping("/adminDashboard")
+    public String dashboard(HttpSession session, Model model) {
+
+        if(session.getAttribute("admin") == null){
+            return "redirect:/loginForm";
+        }
+
+        // Dummy data for now (later connect from service)
+        model.addAttribute("totalEvents", 12);
+        model.addAttribute("totalDelegates", 350);
+        model.addAttribute("totalResponses", 280);
+
+        return "adminDashboard";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "redirect:/loginForm";
+    }
+
+}
