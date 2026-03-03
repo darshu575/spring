@@ -1,0 +1,51 @@
+package com.xworkz.delegatecontact.servies.eventService;
+
+import com.xworkz.delegatecontact.dao.eventDao.EventDao;
+import com.xworkz.delegatecontact.dto.EventDTO;
+import com.xworkz.delegatecontact.entity.eventEntity.EventEntity;
+import com.xworkz.delegatecontact.entity.eventEntity.TpoEntity;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class EventServiceImpl implements EventService{
+    @Autowired
+    EventDao eventDao;
+
+
+    @Override
+    public boolean saveEvent(EventDTO dto) {
+        System.out.println("saveEvent service Started");
+        EventEntity eventEntity=new EventEntity();
+        BeanUtils.copyProperties(dto,eventEntity);
+        if(dto.getEventDate() != null && !dto.getEventDate().isEmpty()) {
+            eventEntity.setEventDate(LocalDate.parse(dto.getEventDate()));
+        }
+        // Hancling the Multiple Tpo Emails And Set
+        List<TpoEntity> tpoList = new ArrayList<>();
+        if(dto.getTpoEmailList() != null) {
+            for(String email : dto.getTpoEmailList()) {
+
+                if(email != null && !email.trim().isEmpty()) {
+
+                    TpoEntity tpo = new TpoEntity();
+                    tpo.setEmail(email);
+                    tpo.setEvent(eventEntity);  // very important
+                    tpoList.add(tpo);
+                }
+            }
+        }
+        eventEntity.setTpoList(tpoList);
+boolean saved=eventDao.saveEvents(eventEntity);
+if (saved){
+    return true;
+}else
+        return false;
+    }
+}
