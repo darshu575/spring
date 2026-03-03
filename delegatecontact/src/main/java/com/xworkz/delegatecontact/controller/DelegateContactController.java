@@ -1,15 +1,18 @@
 package com.xworkz.delegatecontact.controller;
 
+import com.xworkz.delegatecontact.dto.EventDTO;
 import com.xworkz.delegatecontact.servies.AdminService;
+import com.xworkz.delegatecontact.servies.eventService.EventService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
 
 @Controller
 @RequestMapping("/")
@@ -21,6 +24,9 @@ public class DelegateContactController {
 
     @Autowired
     AdminService adminService;
+
+    @Autowired
+    EventService eventService;
 
     @GetMapping("/loginForm")
     public String loginPage() {
@@ -52,7 +58,7 @@ public class DelegateContactController {
     @GetMapping("/adminDashboard")
     public String dashboard(HttpSession session, Model model) {
 
-        if(session.getAttribute("admin") == null){
+        if (session.getAttribute("admin") == null) {
             return "redirect:/loginForm";
         }
 
@@ -65,9 +71,44 @@ public class DelegateContactController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session){
+    public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/loginForm";
     }
 
+    @SneakyThrows
+    @PostMapping("/createEvent")
+    public ModelAndView saveEvent(@ModelAttribute EventDTO dto, @RequestParam("brochure") MultipartFile file, ModelAndView modelAndView) {
+        System.out.println("Save Event Controller is Started");
+        System.out.println(dto);
+        try {
+
+            if (file != null && !file.isEmpty()) {
+                String uploadDir = "D:/DelagateProject/";
+                String filePath = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+                File dest = new File(uploadDir + filePath);
+                System.out.println(dest);
+                file.transferTo(dest);
+                // Set file path in DTO
+                dto.setBrochurePath("D:/DelagateProject/" + filePath);
+            }
+
+
+            boolean saved = eventService.saveEvent(dto);
+            if (saved){
+                modelAndView.addObject("Saved","Event Created Successfully");
+                modelAndView.setViewName("index");
+
+            }else {
+                modelAndView.addObject("error","Event Not Created");
+                modelAndView.setViewName("index");
+            }
+
+            return modelAndView;
+        } finally {
+            System.out.println("");
+        }
+
+
+    }
 }
