@@ -368,8 +368,15 @@ DelegateContact
 </div>
 
 <div class="mb-3">
-<label class="form-label">College TPO / HR Email</label>
-<input type="email" name="tpoEmail" class="form-control" required>
+    <label class="form-label">College TPO / HR Emails</label>
+
+    <div id="tpoContainer">
+        <input type="email" name="tpoEmailList"
+               class="form-control mb-2" placeholder="Enter TPO Email" required>
+    </div>
+
+    <button type="button" class="btn btn-sm btn-secondary mt-2"
+            onclick="addTpoField()">Add More</button>
 </div>
 
 <div class="mb-3">
@@ -412,6 +419,18 @@ DelegateContact
 <div class="text-center">
 <button type="submit" class="btn btn-dark px-5">Create Event</button>
 </div>
+
+<c:if test="${not empty Saved}">
+    <div class="alert alert-danger">
+        ${Saved}
+    </div>
+</c:if>
+<c:if test="${not empty error}">
+    <div class="alert alert-danger">
+        ${error}
+    </div>
+</c:if>
+
 
 </form>
 
@@ -476,7 +495,7 @@ Karnataka,India - 560001</p>
 
 <div class="mb-4 p-4 shadow-sm rounded bg-light">
 <h5><i class="bi bi-envelope-fill text-primary"></i> Email</h5>
-<p>support@delegatecontact.com</p>
+<p>sdelegatecontact@gmail.com</p>
 </div>
 
 <div class="mb-4 p-4 shadow-sm rounded bg-light">
@@ -525,6 +544,17 @@ function toggleEventFields() {
         locationField.style.display = "none";
         meetingField.style.display = "none";
     }
+}
+function addTpoField() {
+    var container = document.getElementById("tpoContainer");
+
+    var input = document.createElement("input");
+    input.type = "email";
+    input.name = "tpoEmailList";
+    input.className = "form-control mb-2";
+    input.placeholder = "Enter TPO Email";
+
+    container.appendChild(input);
 }
 </script>
 </body>
