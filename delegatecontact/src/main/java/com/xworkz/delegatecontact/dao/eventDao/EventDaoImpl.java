@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
+import java.util.List;
 
 @Repository
 public class EventDaoImpl implements EventDao {
@@ -23,4 +25,21 @@ public class EventDaoImpl implements EventDao {
 
         return true;
     }
+
+    @Override
+    public List getAllEvents() {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        try {
+            Query query = entityManager.createQuery(
+                    "from EventEntity", EventEntity.class
+            );
+
+            return query.getResultList();
+
+        } finally {
+            entityManager.close();
+        }
+    }
 }
+
