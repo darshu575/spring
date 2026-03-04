@@ -11,10 +11,11 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
-public class EventServiceImpl implements EventService{
+public class EventServiceImpl implements EventService {
     @Autowired
     EventDao eventDao;
 
@@ -22,17 +23,17 @@ public class EventServiceImpl implements EventService{
     @Override
     public boolean saveEvent(EventDTO dto) {
         System.out.println("saveEvent service Started");
-        EventEntity eventEntity=new EventEntity();
-        BeanUtils.copyProperties(dto,eventEntity);
-        if(dto.getEventDate() != null && !dto.getEventDate().isEmpty()) {
+        EventEntity eventEntity = new EventEntity();
+        BeanUtils.copyProperties(dto, eventEntity);
+        if (dto.getEventDate() != null && !dto.getEventDate().isEmpty()) {
             eventEntity.setEventDate(LocalDate.parse(dto.getEventDate()));
         }
         // Hancling the Multiple Tpo Emails And Set
         List<TpoEntity> tpoList = new ArrayList<>();
-        if(dto.getTpoEmailList() != null) {
-            for(String email : dto.getTpoEmailList()) {
+        if (dto.getTpoEmailList() != null) {
+            for (String email : dto.getTpoEmailList()) {
 
-                if(email != null && !email.trim().isEmpty()) {
+                if (email != null && !email.trim().isEmpty()) {
 
                     TpoEntity tpo = new TpoEntity();
                     tpo.setEmail(email);
@@ -42,10 +43,28 @@ public class EventServiceImpl implements EventService{
             }
         }
         eventEntity.setTpoList(tpoList);
-boolean saved=eventDao.saveEvents(eventEntity);
-if (saved){
-    return true;
-}else
-        return false;
+        boolean saved = eventDao.saveEvents(eventEntity);
+        if (saved) {
+            return true;
+        } else
+            return false;
+    }
+
+    @Override
+    public List<EventDTO> getAllEvents() {
+        List<EventEntity> getEvents = eventDao.getAllEvents();
+        System.out.println("in service"+getEvents);
+        if (getEvents == null || getEvents.isEmpty()) {
+            return null;
+        }
+        List<EventDTO> eventList = new ArrayList<>();
+        for (EventEntity eventEntity : getEvents) {
+            EventDTO eventDTO=new EventDTO();
+            BeanUtils.copyProperties(eventEntity,eventDTO);
+            eventList.add(eventDTO);
+
+
+        }
+return eventList;
     }
 }
