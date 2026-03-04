@@ -54,7 +54,9 @@ body{
     <h4>DelegateContact</h4>
     <hr>
     <a href="#">Dashboard</a>
-    <a href="#">Manage Events</a>
+    <a href="${pageContext.request.contextPath}/events">
+        Manage Events
+    </a>
     <a href="#">View Responses</a>
     <a href="logout">Logout</a>
 </div>

@@ -1,6 +1,7 @@
 package com.xworkz.delegatecontact.controller;
 
 import com.xworkz.delegatecontact.dto.EventDTO;
+import com.xworkz.delegatecontact.entity.eventEntity.EventEntity;
 import com.xworkz.delegatecontact.servies.AdminService;
 import com.xworkz.delegatecontact.servies.eventService.EventService;
 import lombok.SneakyThrows;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -95,12 +97,12 @@ public class DelegateContactController {
 
 
             boolean saved = eventService.saveEvent(dto);
-            if (saved){
-                modelAndView.addObject("Saved","Event Created Successfully");
+            if (saved) {
+                modelAndView.addObject("Saved", "Event Created Successfully");
                 modelAndView.setViewName("index");
 
-            }else {
-                modelAndView.addObject("error","Event Not Created");
+            } else {
+                modelAndView.addObject("error", "Event Not Created");
                 modelAndView.setViewName("index");
             }
 
@@ -110,5 +112,15 @@ public class DelegateContactController {
         }
 
 
+    }
+
+    @GetMapping("/events")
+    public ModelAndView getAllEvent(ModelAndView modelAndView) {
+        System.out.println("GetAllEvent Controller started");
+        List<EventDTO> eventList = eventService.getAllEvents();
+        System.out.println(eventList);
+        modelAndView.addObject("eventList", eventList);
+        modelAndView.setViewName("ManageEvents");
+        return modelAndView;
     }
 }
