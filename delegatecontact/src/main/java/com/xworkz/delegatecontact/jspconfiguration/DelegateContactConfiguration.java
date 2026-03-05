@@ -70,7 +70,7 @@ public LocalContainerEntityManagerFactoryBean getEntityManagerFactoryBean(){
     public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver resolver =
                 new InternalResourceViewResolver();
-        resolver.setPrefix("/");
+        resolver.setPrefix("/WEB-INF/views/");
         resolver.setSuffix(".jsp");
         return resolver;
     }
