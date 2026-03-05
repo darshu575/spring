@@ -53,18 +53,34 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<EventDTO> getAllEvents() {
         List<EventEntity> getEvents = eventDao.getAllEvents();
-        System.out.println("in service"+getEvents);
+        System.out.println("in service" + getEvents);
         if (getEvents == null || getEvents.isEmpty()) {
-            return null;
+            return new ArrayList<>();
         }
         List<EventDTO> eventList = new ArrayList<>();
         for (EventEntity eventEntity : getEvents) {
-            EventDTO eventDTO=new EventDTO();
-            BeanUtils.copyProperties(eventEntity,eventDTO);
+            EventDTO eventDTO = new EventDTO();
+            BeanUtils.copyProperties(eventEntity, eventDTO);
+
+            if (eventEntity.getEventDate()!=null){
+                eventDTO.setEventDate(eventEntity.getEventDate().toString());
+
+            }
+
+
+            //convert Tpo list to email list
+
+            List<String> emails = new ArrayList<>();
+            if (eventEntity.getTpoList() != null) {
+                for (TpoEntity tpo : eventEntity.getTpoList()) {
+                    emails.add(tpo.getEmail());
+                }
+            }
+            eventDTO.setTpoEmailList(emails);
             eventList.add(eventDTO);
 
 
         }
-return eventList;
+        return eventList;
     }
 }

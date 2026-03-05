@@ -1,15 +1,15 @@
 package com.xworkz.delegatecontact.entity.eventEntity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -37,9 +37,11 @@ import java.util.List;
 
         private String brochurePath;
 
-        @OneToMany(mappedBy="event", cascade=CascadeType.ALL)
+        @OneToMany(mappedBy="event", cascade=CascadeType.ALL,fetch = FetchType.LAZY)
         private List<TpoEntity> tpoList;
 
         // getters setters
+
+
     }
 
