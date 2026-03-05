@@ -78,6 +78,11 @@ public class DelegateContactController {
         return "redirect:/loginForm";
     }
 
+    @GetMapping("/admin/dashboard")
+    public String GoToDashBoard() {
+        return "adminDashboard";
+    }
+
     @SneakyThrows
     @PostMapping("/createEvent")
     public ModelAndView saveEvent(@ModelAttribute EventDTO dto, @RequestParam("brochure") MultipartFile file, ModelAndView modelAndView) {
@@ -123,4 +128,6 @@ public class DelegateContactController {
         modelAndView.setViewName("ManageEvents");
         return modelAndView;
     }
+
+
 }

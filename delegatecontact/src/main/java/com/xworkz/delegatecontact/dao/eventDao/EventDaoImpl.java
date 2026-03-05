@@ -32,7 +32,7 @@ public class EventDaoImpl implements EventDao {
 
         try {
             Query query = entityManager.createQuery(
-                    "from EventEntity", EventEntity.class
+                    "SELECT DISTINCT e FROM EventEntity e LEFT JOIN FETCH e.tpoList", EventEntity.class
             );
 
             return query.getResultList();
