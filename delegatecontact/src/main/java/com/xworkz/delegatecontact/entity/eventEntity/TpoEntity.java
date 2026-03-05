@@ -1,11 +1,10 @@
 package com.xworkz.delegatecontact.entity.eventEntity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -20,4 +19,12 @@ public class TpoEntity {
     @ManyToOne
     @JoinColumn(name="event_id")
     private EventEntity event;
+
+
+    @Override
+    public String toString() {
+        return "TpoEntity{" +
+                "email='" + email + '\'' +
+                '}';
+    }
 }
