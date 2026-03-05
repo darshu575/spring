@@ -128,22 +128,63 @@ transform:translateY(-8px);
 }
 
 /* EVENTS */
-#events{
-    background:
-    linear-gradient(rgba(255,255,255,0.92),rgba(255,255,255,0.92)),
-    url('https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1600&q=80');
-    background-size:cover;
-    background-position:center;
+.events-section{
+background:#f6f9fc;
+padding:80px 0;
 }
+
+.section-title{
+font-weight:700;
+color:#333;
+}
+
 .event-card{
-background:white;
-border-radius:20px;
+background:#fff;
+border-radius:15px;
 padding:25px;
-box-shadow:0 15px 40px rgba(0,0,0,0.08);
+height:100%;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
 transition:0.3s;
 }
+
 .event-card:hover{
 transform:translateY(-8px);
+box-shadow:0 15px 35px rgba(0,0,0,0.15);
+}
+
+.event-header{
+border-bottom:1px solid #eee;
+margin-bottom:15px;
+padding-bottom:10px;
+}
+
+.event-header h4{
+font-weight:600;
+color:#0d6efd;
+}
+
+.event-type{
+background:#0d6efd;
+color:white;
+padding:4px 10px;
+border-radius:20px;
+font-size:12px;
+}
+
+.event-body p{
+margin:5px 0;
+font-size:14px;
+}
+
+.desc{
+color:#666;
+font-size:13px;
+margin-top:10px;
+}
+
+.event-footer{
+margin-top:15px;
+text-align:right;
 }
 
 /* REGISTER */
@@ -279,30 +320,68 @@ DelegateContact
 </section>
 
 <!-- EVENTS -->
+<!-- UPCOMING EVENTS SECTION -->
 
-<section id="events" style="background:#f8f9fa;">
+<section id="events" class="events-section">
 <div class="container">
-<div class="section-title">
-<h2>Upcoming Events</h2>
-</div>
 
-<div class="row g-4">
+<h2 class="text-center mb-5 section-title">Upcoming Events</h2>
+
+<div class="row">
 
 <c:forEach var="event" items="${eventList}">
-<div class="col-md-4">
+
+<div class="col-md-4 mb-4">
+
 <div class="event-card">
-<h4>${event.eventName}</h4>
-<p>${event.description}</p>
+
+<div class="event-header">
+<h4>${event.eventTitle}</h4>
+<span class="event-type">${event.eventType}</span>
+</div>
+
+<div class="event-body">
+
+<p><b>Organizer:</b> ${event.organizerName}</p>
+
 <p><b>Date:</b> ${event.eventDate}</p>
-<p><b>Target:</b> ${event.delegateType}</p>
+
+<p><b>Mode:</b> ${event.eventMode}</p>
+
+<p><b>Target Delegates:</b> ${event.targetCount}</p>
+
+<p class="desc">
+${event.eventDescription}
+</p>
+
 </div>
+
+<div class="event-footer">
+
+<c:if test="${not empty event.meetingLink}">
+<a href="${event.meetingLink}" target="_blank" class="btn btn-primary btn-sm">
+Join Event
+</a>
+</c:if>
+
 </div>
+
+</div>
+
+</div>
+
 </c:forEach>
 
+<c:if test="${empty eventList}">
+<div class="text-center">
+<h4 class="text-danger">No Upcoming Events</h4>
 </div>
+</c:if>
+
+</div>
+
 </div>
 </section>
-
 
 <!-- EVENT CREATION -->
 <section id="register" class="form-section">
