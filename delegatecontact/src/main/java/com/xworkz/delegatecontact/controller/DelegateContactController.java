@@ -115,8 +115,6 @@ public class DelegateContactController {
         } finally {
             System.out.println("");
         }
-
-
     }
 
     @GetMapping("/events")
