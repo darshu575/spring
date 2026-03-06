@@ -12,8 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 @Controller
 public class HomeController {
-
-
     private HomeController(){
         System.out.println("Home Controller Started");
     }

@@ -208,9 +208,7 @@ Join Meeting
 </c:if>
 
 <!-- Action Buttons -->
-
 <div class="mt-3">
-
 <a href="${pageContext.request.contextPath}/admin/editEvent?id=${event.eventTitle}"
 class="btn btn-warning btn-sm action-btn">
 Edit
@@ -239,7 +237,6 @@ Delete
 <!-- Search Script -->
 
 <script>
-
 document.getElementById("searchInput").addEventListener("keyup", function() {
 
 let value = this.value.toLowerCase();
@@ -250,7 +247,6 @@ cards.forEach(function(card){
 let text = card.innerText.toLowerCase();
 
 card.style.display = text.includes(value) ? "" : "none";
-
 });
 
 });
