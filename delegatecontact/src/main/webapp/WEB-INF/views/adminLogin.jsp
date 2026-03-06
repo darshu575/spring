@@ -109,6 +109,5 @@ DelegateContact
         <a href="index.jsp">← Back to Home</a>
     </div>
 </div>
-
 </body>
 </html>
