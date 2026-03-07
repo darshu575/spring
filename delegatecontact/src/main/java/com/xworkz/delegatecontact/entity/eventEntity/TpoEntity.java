@@ -13,8 +13,11 @@ public class TpoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     private String email;
+
+    private String loginCode;
+
+
 
     @ManyToOne
     @JoinColumn(name="event_id")

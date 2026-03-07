@@ -90,6 +90,15 @@ padding:5px 12px;
 <body>
 
 <div class="container mt-4">
+<c:if test="${not empty message}">
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+
+<strong>Email Sent!</strong> ${message}
+
+<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+
+</div>
+</c:if>
 
 <!-- Dashboard Title -->
 
@@ -150,12 +159,14 @@ placeholder="Search Event Title...">
 
 <div class="card event-card p-3">
 
-<div class="event-header">
+<div class="event-header d-flex justify-content-between align-items-center">
 <strong>${event.eventTitle}</strong>
+<c:if test="${event.emailSent}">
+<span class="badge bg-success">Email Sent</span>
+</c:if>
 </div>
 
 <div class="card-body">
-
 <p><span class="section-title">Organizer:</span>
 ${event.organizerName}</p>
 
@@ -219,6 +230,24 @@ class="btn btn-danger btn-sm action-btn"
 onclick="return confirm('Delete this event?')">
 Delete
 </a>
+
+
+<c:choose>
+<c:when test="${event.emailSent}">
+<button class="btn btn-secondary btn-sm action-btn" disabled>
+Email Sent
+</button>
+</c:when>
+
+<c:otherwise>
+<form action="${pageContext.request.contextPath}/admin/sendEventEmail" method="post" style="display:inline;">
+<input type="hidden" name="eventId" value="${event.id}">
+<button type="submit" class="btn btn-success btn-sm action-btn">
+Send Email
+</button>
+</form>
+</c:otherwise>
+</c:choose>
 
 </div>
 
