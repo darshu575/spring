@@ -1,5 +1,6 @@
 package com.xworkz.delegatecontact.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.xworkz.delegatecontact.dto.EventDTO;
 import com.xworkz.delegatecontact.entity.eventEntity.EventEntity;
 import com.xworkz.delegatecontact.servies.AdminService;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -50,7 +52,7 @@ public class DelegateContactController {
 
         if (valid) {
             session.setAttribute("admin", email);
-            return "adminDashboard";
+            return "redirect:/adminDashboard";
         } else {
             model.addAttribute("error", "Invalid Email or Password");
             return "adminLogin";
@@ -60,14 +62,19 @@ public class DelegateContactController {
     @GetMapping("/adminDashboard")
     public String dashboard(HttpSession session, Model model) {
 
-        if (session.getAttribute("admin") == null) {
+        Object admin = session.getAttribute("admin");
+
+        if(admin == null) {
             return "redirect:/loginForm";
         }
 
-        // Dummy data for now (later connect from service)
-        model.addAttribute("totalEvents", 12);
-        model.addAttribute("totalDelegates", 350);
-        model.addAttribute("totalResponses", 280);
+        List<EventDTO> list = eventService.getAllEvents();
+
+        System.out.println("Dashboard Events: " + list);
+
+        model.addAttribute("eventLists", list);
+        model.addAttribute("today", LocalDate.now());   // ⭐ ADD THIS LINE
+
 
         return "adminDashboard";
     }
@@ -126,6 +133,7 @@ public class DelegateContactController {
         modelAndView.setViewName("ManageEvents");
         return modelAndView;
     }
+
 
 
 }

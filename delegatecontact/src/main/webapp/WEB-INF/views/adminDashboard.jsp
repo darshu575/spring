@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html>
@@ -107,21 +108,48 @@ body{
 <th>Date</th>
 <th>Target</th>
 <th>Status</th>
+
 </tr>
 </thead>
+
 <tbody>
+
+<c:forEach var="event" items="${eventLists}">
+
 <tr>
-<td>Java Workshop</td>
-<td>10 Feb 2026</td>
-<td>Students</td>
-<td>Active</td>
+<td>${event.eventTitle}</td>
+<td>${event.eventDate}</td>
+<td>${event.targetCount}</td>
+<td>
+<c:choose>
+
+<c:when test="${event.eventDate > today}">
+Pending
+</c:when>
+
+<c:when test="${event.eventDate == today}">
+Active
+</c:when>
+
+<c:otherwise>
+Completed
+</c:otherwise>
+
+</c:choose>
+</td>
+
 </tr>
+
+</c:forEach>
+
+<c:if test="${empty eventLists}">
 <tr>
-<td>HR Meetup</td>
-<td>15 Feb 2026</td>
-<td>HR</td>
-<td>Completed</td>
+<td colspan="4" class="text-center text-danger">
+No Events Available
+</td>
 </tr>
+</c:if>
+
 </tbody>
 </table>
 </div>

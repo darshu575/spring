@@ -27,7 +27,7 @@ public class EventDaoImpl implements EventDao {
     }
 
     @Override
-    public List getAllEvents() {
+    public List<EventEntity> getAllEvents() {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         try {
