@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EventDTO {
+    private int id;
     private String organizerName;
     private String officialEmail;
     private String organizationName;
@@ -27,4 +28,5 @@ public class EventDTO {
     @Transient
     private MultipartFile brochure;
     private String brochurePath;
+    private Boolean emailSent;
 }

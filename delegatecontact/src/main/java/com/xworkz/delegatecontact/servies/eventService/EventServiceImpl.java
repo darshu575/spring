@@ -4,6 +4,7 @@ import com.xworkz.delegatecontact.dao.eventDao.EventDao;
 import com.xworkz.delegatecontact.dto.EventDTO;
 import com.xworkz.delegatecontact.entity.eventEntity.EventEntity;
 import com.xworkz.delegatecontact.entity.eventEntity.TpoEntity;
+import com.xworkz.delegatecontact.util.CodeGeneratorUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +19,6 @@ import java.util.List;
 public class EventServiceImpl implements EventService {
     @Autowired
     EventDao eventDao;
-
 
     @Override
     public boolean saveEvent(EventDTO dto) {
@@ -37,6 +37,7 @@ public class EventServiceImpl implements EventService {
 
                     TpoEntity tpo = new TpoEntity();
                     tpo.setEmail(email);
+                    tpo.setLoginCode(CodeGeneratorUtil.generateCode());
                     tpo.setEvent(eventEntity);  // very important
                     tpoList.add(tpo);
                 }

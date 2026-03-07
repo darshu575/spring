@@ -40,6 +40,9 @@ import java.util.List;
         @OneToMany(mappedBy="event", cascade=CascadeType.ALL,fetch = FetchType.LAZY)
         private List<TpoEntity> tpoList;
 
+    @Column(name="email_sent")
+    private Boolean emailSent;
+
         // getters setters
 
 
