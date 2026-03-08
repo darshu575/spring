@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -92,7 +93,7 @@ public class DelegateContactController {
 
     @SneakyThrows
     @PostMapping("/createEvent")
-    public ModelAndView saveEvent(@ModelAttribute EventDTO dto, @RequestParam("brochure") MultipartFile file, ModelAndView modelAndView) {
+    public String saveEvent(@ModelAttribute EventDTO dto, @RequestParam("brochure") MultipartFile file, RedirectAttributes redirectAttributes) {
         System.out.println("Save Event Controller is Started");
         System.out.println(dto);
         try {
@@ -110,18 +111,19 @@ public class DelegateContactController {
 
             boolean saved = eventService.saveEvent(dto);
             if (saved) {
-                modelAndView.addObject("Saved", "Event Created Successfully");
-                modelAndView.setViewName("index");
+                redirectAttributes.addFlashAttribute("success", "Event Created Successfully");
+
 
             } else {
-                modelAndView.addObject("error", "Event Not Created");
-                modelAndView.setViewName("index");
+                redirectAttributes.addFlashAttribute("error", "Event Not Created");
+
             }
 
-            return modelAndView;
-        } finally {
-            System.out.println("");
+
+        } catch (Exception e){
+           redirectAttributes.addFlashAttribute("error","Something went wrong!");
         }
+        return "redirect:/";
     }
 
     @GetMapping("/events")

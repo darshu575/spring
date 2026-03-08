@@ -22,7 +22,7 @@ public class EmailSentController {
 
         emailSentService.sendEventEmailToTPO(eventId);
         modelAndView.addObject("message", "Emails sent successfully to all TPOs!");
-        modelAndView.setViewName("redirect:/admin/manageEvents");
+        modelAndView.setViewName("redirect:/manageEvents");
 
 
 
