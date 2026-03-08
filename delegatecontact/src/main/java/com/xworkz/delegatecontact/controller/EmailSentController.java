@@ -4,10 +4,12 @@ import com.xworkz.delegatecontact.servies.emailsentservice.EmailSentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping("/admin")
 public class EmailSentController {
 
     public EmailSentController(){
@@ -17,12 +19,12 @@ public class EmailSentController {
     EmailSentService emailSentService;
 
 
-    @PostMapping("/admin/sendEventEmail")
+    @PostMapping("/sendEventEmail")
     public ModelAndView sendEventEmail(@RequestParam int eventId,ModelAndView modelAndView){
 
         emailSentService.sendEventEmailToTPO(eventId);
         modelAndView.addObject("message", "Emails sent successfully to all TPOs!");
-        modelAndView.setViewName("redirect:/manageEvents");
+        modelAndView.setViewName("redirect:/events");
 
 
 

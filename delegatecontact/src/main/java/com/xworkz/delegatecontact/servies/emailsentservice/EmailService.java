@@ -18,6 +18,7 @@ public class EmailService {
         SimpleMailMessage simpleMailMessage=new SimpleMailMessage();
         simpleMailMessage.setTo(toEmail);
         simpleMailMessage.setSubject("Event Invitation");
+        String portalLink = "http://localhost:8085/delegatecontact/tpo/login";
         String emailBody =
                 "Dear TPO,\n\n" +
 
@@ -30,7 +31,8 @@ public class EmailService {
                         "Event Date  : " + eventEntity.getEventDate() + "\n" +
                         "Location    : " + eventEntity.getEventLocation() + "\n" +
                         "Participate Target    : " + eventEntity.getTargetCount() + "\n" +
-                        "--------------------------------------------------\n\n" +
+                        "Please login to confirm participation:\n" +
+                        portalLink + "\n\n" +
 
                         "You can access the event portal using the following credentials:\n\n" +
 
