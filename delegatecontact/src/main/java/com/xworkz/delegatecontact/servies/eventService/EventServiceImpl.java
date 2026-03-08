@@ -28,7 +28,7 @@ public class EventServiceImpl implements EventService {
         if (dto.getEventDate() != null && !dto.getEventDate().isEmpty()) {
             eventEntity.setEventDate(LocalDate.parse(dto.getEventDate()));
         }
-        // Hancling the Multiple Tpo Emails And Set
+        // Handling the Multiple Tpo Emails And Set
         List<TpoEntity> tpoList = new ArrayList<>();
         if (dto.getTpoEmailList() != null) {
             for (String email : dto.getTpoEmailList()) {

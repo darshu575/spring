@@ -272,6 +272,20 @@ DelegateContact
 </div>
 </nav>
 
+<c:if test="${not empty success}">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        ${success}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</c:if>
+
+<c:if test="${not empty error}">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        ${error}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</c:if>
+
 <!-- HERO -->
 <section id="home" class="hero">
 <div>
@@ -496,20 +510,9 @@ Join Event
 </div>
 
 <div class="text-center">
-<button type="submit" class="btn btn-dark px-5">Create Event</button>
-</div>
-
-<c:if test="${not empty Saved}">
-    <div class="alert alert-danger">
-        ${Saved}
-    </div>
-</c:if>
-<c:if test="${not empty error}">
-    <div class="alert alert-danger">
-        ${error}
-    </div>
-</c:if>
-
+<button type="submit" onclick="this.disabled=true; this.form.submit();">
+    Create Event
+</button></div>
 
 </form>
 
