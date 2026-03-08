@@ -74,7 +74,7 @@ public class DelegateContactController {
         System.out.println("Dashboard Events: " + list);
 
         model.addAttribute("eventLists", list);
-        model.addAttribute("today", LocalDate.now());   // ⭐ ADD THIS LINE
+        model.addAttribute("today", LocalDate.now());   // ADD THIS LINE
 
 
         return "adminDashboard";
