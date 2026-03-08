@@ -240,7 +240,8 @@ Email Sent
 </c:when>
 
 <c:otherwise>
-<form action="${pageContext.request.contextPath}/admin/sendEventEmail" method="post" style="display:inline;">
+<form action="${pageContext.request.contextPath}/admin/sendEventEmail"
+      method="post" style="display:inline;">
 <input type="hidden" name="eventId" value="${event.id}">
 <button type="submit" class="btn btn-success btn-sm action-btn">
 Send Email
