@@ -38,6 +38,10 @@ public class DelegateContactController {
         return "adminLogin";
     }
 
+    @GetMapping("/responses")
+    public String TpoRespond(){
+        return "AdminDelegateResponse";
+    }
 
     @PostMapping("/adminLogin")
     public String login(@RequestParam String email,
