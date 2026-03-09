@@ -1,27 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+
 <%@ page isELIgnored="false" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
+
 <head>
 
 <title>Manage Events | DelegateContact</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
 
 body{
-background:linear-gradient(135deg,#eef2f7,#ffffff);
+background:#f4f6fb;
 font-family:'Segoe UI',sans-serif;
 }
 
-/* Dashboard title */
+/* Top bar */
 
-.dashboard-title{
-font-weight:600;
+.topbar{
+background:white;
+padding:15px 25px;
+box-shadow:0 5px 20px rgba(0,0,0,0.05);
+margin-bottom:25px;
 }
 
 /* Stats Cards */
@@ -43,7 +52,7 @@ box-shadow:0 8px 25px rgba(0,0,0,0.1);
 .event-card{
 border:none;
 border-radius:18px;
-box-shadow:0 10px 30px rgba(0,0,0,0.08);
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
 transition:0.3s;
 }
 
@@ -53,11 +62,14 @@ box-shadow:0 15px 40px rgba(0,0,0,0.15);
 }
 
 .event-header{
-background:#4da6ff;
+background:#007bff;
 color:white;
-padding:10px;
+padding:10px 15px;
 border-radius:12px;
+font-weight:600;
 }
+
+/* small badges */
 
 .badge-custom{
 background:#e6f2ff;
@@ -71,11 +83,15 @@ font-weight:600;
 color:#555;
 }
 
+/* search */
+
 .search-box{
 border-radius:25px;
-padding:8px 15px;
+padding:10px 15px;
 border:1px solid #ddd;
 }
+
+/* buttons */
 
 .action-btn{
 border-radius:20px;
@@ -89,67 +105,94 @@ padding:5px 12px;
 
 <body>
 
-<div class="container mt-4">
-<c:if test="${not empty message}">
-<div class="alert alert-success alert-dismissible fade show" role="alert">
+<!-- Top Bar -->
 
-<strong>Email Sent!</strong> ${message}
+<div class="topbar d-flex justify-content-between">
 
-<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-
-</div>
-</c:if>
-
-<!-- Dashboard Title -->
-
-<div class="d-flex justify-content-between mb-4">
-
-<h3 class="dashboard-title">Manage Events</h3>
+<h4><i class="fa fa-calendar"></i> Manage Events</h4>
 
 <a href="${pageContext.request.contextPath}/admin/dashboard"
 class="btn btn-dark">
-Dashboard
+<i class="fa fa-home"></i> Dashboard
 </a>
 
 </div>
+
+
+<div class="container">
+
+<c:if test="${not empty message}">
+
+<div class="alert alert-success">
+
+<strong>Email Sent!</strong> ${message}
+
+</div>
+
+</c:if>
+
 
 <!-- Statistics -->
 
 <div class="row mb-4">
 
 <div class="col-md-4">
+
 <div class="stats-card bg-blue">
-<h5>Total Events</h5>
+
+<h6>Total Events</h6>
+
 <h3>${eventList.size()}</h3>
-</div>
+
 </div>
 
+</div>
+
+
 <div class="col-md-4">
+
 <div class="stats-card bg-green">
-<h5>Total Organizers</h5>
+
+<h6>Total Organizers</h6>
+
 <h3>${eventList.size()}</h3>
+
 </div>
+
 </div>
+
 
 <div class="col-md-4">
+
 <div class="stats-card bg-purple">
-<h5>Upcoming Events</h5>
+
+<h6>Upcoming Events</h6>
+
 <h3>${eventList.size()}</h3>
-</div>
+
 </div>
 
 </div>
+
+</div>
+
 
 <!-- Search -->
 
 <div class="mb-4">
 
-<input type="text" id="searchInput" class="form-control search-box"
-placeholder="Search Event Title...">
+<input type="text"
+
+id="searchInput"
+
+class="form-control search-box"
+
+placeholder="🔎 Search Event Title...">
 
 </div>
 
-<!-- Event Cards -->
+
+<!-- Events -->
 
 <div class="row" id="eventContainer">
 
@@ -159,21 +202,33 @@ placeholder="Search Event Title...">
 
 <div class="card event-card p-3">
 
-<div class="event-header d-flex justify-content-between align-items-center">
-<strong>${event.eventTitle}</strong>
+
+<div class="event-header d-flex justify-content-between">
+
+${event.eventTitle}
+
 <c:if test="${event.emailSent}">
-<span class="badge bg-success">Email Sent</span>
+
+<span class="badge bg-success">
+
+<i class="fa fa-check"></i> Email Sent
+
+</span>
+
 </c:if>
+
 </div>
 
+
 <div class="card-body">
+
 <p><span class="section-title">Organizer:</span>
 ${event.organizerName}</p>
 
 <p><span class="section-title">Organization:</span>
 ${event.organizationName}</p>
 
-<p><span class="section-title">Email:</span>
+<p><span class="section-title">Official Email:</span>
 ${event.officialEmail}</p>
 
 <p><span class="section-title">Event Type:</span>
@@ -197,57 +252,97 @@ ${event.eventLocation}</p>
 <p><span class="section-title">Description:</span>
 ${event.eventDescription}</p>
 
+
 <!-- TPO Emails -->
 
 <p class="section-title">TPO Emails</p>
 
 <c:forEach var="tpo" items="${event.tpoEmailList}">
+
 <span class="badge badge-custom">${tpo}</span>
+
 </c:forEach>
+
 
 <!-- Meeting Link -->
 
 <c:if test="${not empty event.meetingLink}">
+
 <div class="mt-2">
 
-<a href="${event.meetingLink}" target="_blank"
+<a href="${event.meetingLink}"
+
+target="_blank"
+
 class="btn btn-primary btn-sm action-btn">
-Join Meeting
+
+<i class="fa fa-video"></i> Join Meeting
+
 </a>
 
 </div>
+
 </c:if>
 
-<!-- Action Buttons -->
+
+<!-- Actions -->
+
 <div class="mt-3">
-<a href="${pageContext.request.contextPath}/admin/editEvent?id=${event.eventTitle}"
+
+<a href="${pageContext.request.contextPath}/admin/editEvent?id=${event.id}"
+
 class="btn btn-warning btn-sm action-btn">
-Edit
+
+<i class="fa fa-edit"></i> Edit
+
 </a>
 
-<a href="${pageContext.request.contextPath}/admin/deleteEvent?id=${event.eventTitle}"
+
+<a href="${pageContext.request.contextPath}/admin/deleteEvent?id=${event.id}"
+
 class="btn btn-danger btn-sm action-btn"
+
 onclick="return confirm('Delete this event?')">
-Delete
+
+<i class="fa fa-trash"></i> Delete
+
 </a>
 
 
 <c:choose>
+
 <c:when test="${event.emailSent}">
+
 <button class="btn btn-secondary btn-sm action-btn" disabled>
+
 Email Sent
+
 </button>
+
 </c:when>
 
 <c:otherwise>
+
 <form action="${pageContext.request.contextPath}/admin/sendEventEmail"
-      method="post" style="display:inline;">
+
+method="post"
+
+style="display:inline;">
+
 <input type="hidden" name="eventId" value="${event.id}">
-<button type="submit" class="btn btn-success btn-sm action-btn">
-Send Email
+
+<button type="submit"
+
+class="btn btn-success btn-sm action-btn">
+
+<i class="fa fa-paper-plane"></i> Send Email
+
 </button>
+
 </form>
+
 </c:otherwise>
+
 </c:choose>
 
 </div>
@@ -264,12 +359,15 @@ Send Email
 
 </div>
 
+
 <!-- Search Script -->
 
 <script>
-document.getElementById("searchInput").addEventListener("keyup", function() {
+
+document.getElementById("searchInput").addEventListener("keyup", function(){
 
 let value = this.value.toLowerCase();
+
 let cards = document.querySelectorAll(".event-item");
 
 cards.forEach(function(card){
@@ -277,6 +375,7 @@ cards.forEach(function(card){
 let text = card.innerText.toLowerCase();
 
 card.style.display = text.includes(value) ? "" : "none";
+
 });
 
 });
@@ -284,4 +383,5 @@ card.style.display = text.includes(value) ? "" : "none";
 </script>
 
 </body>
+
 </html>
