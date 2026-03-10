@@ -87,6 +87,10 @@ transition:0.3s;
 <i class="fa fa-calendar"></i> Received Events
 </a>
 
+<a href="${pageContext.request.contextPath}/tpo/registerStudent">
+<i class="fa fa-calendar"></i>Register Student
+</a>
+
 <a href="${pageContext.request.contextPath}/tpo/responses">
 <i class="fa fa-users"></i> Student Responses
 </a>

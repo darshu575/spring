@@ -1,9 +1,12 @@
 package com.xworkz.delegatecontact.controller;
 
+import com.xworkz.delegatecontact.dto.DelegateDto;
 import com.xworkz.delegatecontact.dto.EventDTO;
+import com.xworkz.delegatecontact.servies.delegateservice.DelegateService;
 import com.xworkz.delegatecontact.servies.tposervice.TpoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,9 +23,17 @@ public class TpoController {
     @Autowired
     TpoService tpoService;
 
+    @Autowired
+    DelegateService delegateService;
+
     @GetMapping("/login")
     public String showLoginPage() {
         return "TpoLoginPortal";
+    }
+
+    @GetMapping("/registerStudent")
+    public String DelegateREgister(){
+        return "DelegateRegister";
     }
 
     @PostMapping("/tpologin")
@@ -50,5 +61,34 @@ return "TpoLoginPortal";
     return  modelAndView;
 
 }
+
+@PostMapping("registerStudent")
+    public ModelAndView RegisterDelegate(@ModelAttribute DelegateDto dto,ModelAndView modelAndView){
+
+    System.out.println("ResisterDelegate method Started");
+    System.out.println(dto);
+    boolean saved=delegateService.saveDelegate(dto);
+    if (saved){
+        modelAndView.addObject("saved","Register Successfully");
+        modelAndView.setViewName("DelegateRegister");
+    }else {
+        modelAndView.addObject("error","Not Saved");
+        modelAndView.setViewName("DelegateRegister");
+    }
+
+    return modelAndView;
+}
+
+@PostMapping("/contactDelegate")
+    public ModelAndView sendEmailToDelagate(@RequestParam int eventId,ModelAndView modelAndView){
+        delegateService.sendEmailToDelegate(eventId);
+        modelAndView.addObject("sendMessaged","Email Send to Delegate Successfully");
+        modelAndView.setViewName("redirect:/ReceivedEvent");
+
+
+
+        return  modelAndView;
+}
+
 
 }
