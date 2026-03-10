@@ -25,9 +25,9 @@
 
 <div class="mb-3">
 
-<label>Student Name</label>
+<label> Name</label>
 
-<input type="text" name="studentName"
+<input type="text" name="name"
 class="form-control" required>
 
 </div>
@@ -45,8 +45,16 @@ class="form-control" required>
 
 <label>Phone</label>
 
-<input type="text" name="phone"
+<input type="text" name="phoneNumber"
 class="form-control">
+
+</div>
+<div class="mb-3">
+
+<label>Address</label>
+
+<input type="text" name="address"
+class="form-control" required>
 
 </div>
 
