@@ -163,7 +163,17 @@ class="btn btn-outline-primary btn-sm">
 
 <i class="fa fa-download"></i> Brochure
 
-</a>
+<form action="${pageContext.request.contextPath}/tpo/contactDelegate" method="post">
+
+<input type="hidden" name="eventId" value="${event.id}">
+
+<button type="submit" class="btn btn-success btn-sm">
+
+<i class="fa fa-paper-plane"></i> Send To Delegates
+
+</button>
+
+</form>
 
 </div>
 
