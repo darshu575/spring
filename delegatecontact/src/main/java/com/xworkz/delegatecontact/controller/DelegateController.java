@@ -1,10 +1,8 @@
 package com.xworkz.delegatecontact.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.xworkz.delegatecontact.dto.RespondDto;
 import com.xworkz.delegatecontact.servies.delegateservice.DelegateService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +19,9 @@ public class DelegateController {
     DelegateService delegateService;
 
     @GetMapping("/respond")
-    public String openRespondPage(@RequestParam int eventId, Model model) {
+    public String openRespondPage(@RequestParam int eventId,@RequestParam String tpoEmail, Model model) {
+        model.addAttribute("eventId",eventId);
+        model.addAttribute("tpoEmail",tpoEmail);
         return "DelegateRespondPage";
     }
 

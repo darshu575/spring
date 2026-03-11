@@ -15,4 +15,9 @@ public interface DelegateDao {
 
     boolean saveRespond(RespondEntity respondEntity);
 
+    List<RespondEntity> getRespondByTpo(String  tpoEmail);
+
+    int countEmailSent(String email);
+
+    int countResponses(String email);
 }
