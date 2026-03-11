@@ -53,12 +53,12 @@ public class EmailService {
 
     }
 
-    public void sendEventToDelegate(String emails, EventEntity eventEntity) {
+    public void sendEventToDelegate(String emails, EventEntity eventEntity, String tpoEmail) {
         SimpleMailMessage simpleMailMessage=new SimpleMailMessage();
         simpleMailMessage.setTo(emails);
         simpleMailMessage.setSubject("Event Invitation");
         String RespondLink =" http://localhost:8085/delegatecontact/delegate/respond?eventId="
-        + eventEntity.getId();;
+        + eventEntity.getId() +  "&tpoEmail=" + tpoEmail;
         String emailBody =
                 "Dear Delegate,\n\n" +
 

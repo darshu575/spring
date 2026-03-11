@@ -11,6 +11,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -36,7 +38,7 @@ public class DelegateServiceImpl implements DelegateService{
     }
 
     @Override
-    public void sendEmailToDelegate(int eventId) {
+    public void sendEmailToDelegate(int eventId, String tpoEmail) {
         EventEntity eventEntity=delegateDao.getEventBuId(eventId);
         System.out.println("sendEmailToDelegate in service Started");
         String delegateType= eventEntity.getDelegateType();
@@ -45,7 +47,7 @@ public class DelegateServiceImpl implements DelegateService{
         System.out.println(delegateEntities);
         for (DelegateEntity delegate:delegateEntities){
             String emails=delegate.getEmail();
-            emailService.sendEventToDelegate(emails,eventEntity);
+            emailService.sendEventToDelegate(emails,eventEntity,tpoEmail);
 
         }
 
@@ -63,5 +65,31 @@ public class DelegateServiceImpl implements DelegateService{
 
 
         return false;
+    }
+
+    @Override
+    public List<RespondDto> getResponsesByTpo(String tpoEmail) {
+        List<RespondEntity> respondEntities=delegateDao.getRespondByTpo(tpoEmail);
+        if (respondEntities == null || respondEntities.isEmpty()) {
+            return new ArrayList<>();
+        }
+List<RespondDto> respondDtos=new ArrayList<>();
+        for (RespondEntity respondEntity:respondEntities){
+            RespondDto respondDto=new RespondDto();
+            BeanUtils.copyProperties(respondEntity,respondDto);
+            respondDtos.add(respondDto);
+        }
+
+        return respondDtos;
+    }
+
+    @Override
+    public int countEmailsSent(String email) {
+        return delegateDao.countEmailSent(email);
+    }
+
+    @Override
+    public int countResponses(String email) {
+        return delegateDao.countResponses(email);
     }
 }
