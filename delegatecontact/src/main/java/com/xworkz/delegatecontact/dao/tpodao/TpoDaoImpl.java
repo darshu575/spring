@@ -47,4 +47,22 @@ public class TpoDaoImpl implements TpoDao{
 
 
     }
+
+    @Override
+    public int countEvents(String email) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        Long count;
+        try {
+            Query query = entityManager.createQuery(
+                    "SELECT COUNT(t) FROM TpoEntity t WHERE t.email = :temail"
+            );
+            query.setParameter("temail", email);
+            count = (Long) query.getSingleResult();
+
+
+        } finally {
+            entityManager.close();
+        }
+        return count.intValue();
+    }
 }

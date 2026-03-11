@@ -88,16 +88,14 @@ transition:0.3s;
 </a>
 
 <a href="${pageContext.request.contextPath}/tpo/registerStudent">
-<i class="fa fa-calendar"></i>Register Student
+<i class="fa fa-calendar"></i>Register Delegate
 </a>
 
-<a href="${pageContext.request.contextPath}/tpo/responses">
-<i class="fa fa-users"></i> Student Responses
+<a href="${pageContext.request.contextPath}/tpo/viewResponses"
+class="btn btn-primary">
+View All Responses
 </a>
 
-<a href="logout">
-<i class="fa fa-sign-out-alt"></i> Logout
-</a>
 
 </div>
 
@@ -165,60 +163,6 @@ Welcome , ${sessionScope.tpoemail}
 
 </div>
 
-<!-- event table -->
-
-<div class="card mt-5 p-4">
-
-<h5>Received Events</h5>
-
-<table class="table table-hover mt-3">
-
-<thead class="table-dark">
-
-<tr>
-
-<th>Event</th>
-<th>Date</th>
-<th>Location</th>
-<th>Action</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<c:forEach var="event" items="${events}">
-
-<tr>
-
-<td>${event.eventTitle}</td>
-
-<td>${event.eventDate}</td>
-
-<td>${event.eventLocation}</td>
-
-<td>
-
-<a href="${pageContext.request.contextPath}/tpo/sendToStudents?id=${event.id}"
-
-class="btn btn-success btn-sm">
-
-Send To Students
-
-</a>
-
-</td>
-
-</tr>
-
-</c:forEach>
-
-</tbody>
-
-</table>
-
-</div>
 
 </div>
 
