@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -18,7 +19,7 @@ public class DelegateDaoImpl implements DelegateDao {
 
     @Override
     public boolean saveDelegate(DelegateEntity delegateEntity) {
-        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(delegateEntity);
         entityManager.getTransaction().commit();
@@ -38,21 +39,76 @@ public class DelegateDaoImpl implements DelegateDao {
 
     @Override
     public List<DelegateEntity> getDelegateByType(String delegateType) {
-        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
-          Query query= entityManager.createQuery(" FROM DelegateEntity d WHERE d.delegateType = :dtype ", DelegateEntity.class);
-            query.setParameter("dtype",delegateType);
+            Query query = entityManager.createQuery(" FROM DelegateEntity d WHERE d.delegateType = :dtype ", DelegateEntity.class);
+            query.setParameter("dtype", delegateType);
             return query.getResultList();
-        }finally {
+        } finally {
             entityManager.close();
         }
     }
 
     @Override
     public boolean saveRespond(RespondEntity respondEntity) {
-        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(respondEntity);
         entityManager.getTransaction().commit();
-        return true;    }
+        return true;
+    }
+
+    @Override
+    public List<RespondEntity> getRespondByTpo(String tpoEmail) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        List<RespondEntity> list;
+        try {
+            Query query = entityManager.createQuery("FROM RespondEntity r where r.tpoEmail.email=:tEmail");
+            query.setParameter("tEmail", tpoEmail);
+
+            list = query.getResultList();
+        } finally {
+            entityManager.close();
+        }
+        return list;
+    }
+
+    @Override
+    public int countEmailSent(String email) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        Long count;
+        try {
+            Query query = entityManager.createQuery(
+                    "SELECT COUNT(d) FROM DelegateEntity d"
+            );
+
+            count = (Long) query.getSingleResult();
+
+
+        } finally {
+            entityManager.close();
+        }
+        return count.intValue();
+    }
+
+    @Override
+    public int countResponses(String email) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        Long count;
+        try {
+            Query query = entityManager.createQuery(
+                    "SELECT COUNT(r) FROM RespondEntity r WHERE r.tpoEmail = :tpemail"
+            );
+            query.setParameter("tpemail", email);
+            count = (Long) query.getSingleResult();
+
+
+        } finally {
+            entityManager.close();
+        }
+        return count.intValue();
+    }
 }
+
+
+

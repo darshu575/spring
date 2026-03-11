@@ -98,6 +98,7 @@ Response submitted successfully. Thank you for your participation!
 <form action="${pageContext.request.contextPath}/delegate/saveResponse" method="post">
 
 <input type="hidden" name="eventId" value="${eventId}">
+<input type="hidden" name="tpoEmail" value="${tpoEmail}">
 
 <div class="row">
 
