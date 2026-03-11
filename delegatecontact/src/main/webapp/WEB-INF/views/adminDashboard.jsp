@@ -109,7 +109,7 @@ body{
 <i class="fa fa-envelope"></i> View Responses
 </a>
 
-<a href="logout">
+<a href="${pageContext.request.contextPath}/logout">
 <i class="fa fa-sign-out-alt"></i> Logout
 </a>
 

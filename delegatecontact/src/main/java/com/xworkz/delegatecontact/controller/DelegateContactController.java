@@ -39,9 +39,10 @@ public class DelegateContactController {
     }
 
     @GetMapping("/responses")
-    public String TpoRespond(){
+    public String TpoRespond() {
         return "AdminDelegateResponse";
     }
+
 
     @PostMapping("/adminLogin")
     public String login(@RequestParam String email,
@@ -69,7 +70,7 @@ public class DelegateContactController {
 
         Object admin = session.getAttribute("admin");
 
-        if(admin == null) {
+        if (admin == null) {
             return "redirect:/loginForm";
         }
 
@@ -87,7 +88,7 @@ public class DelegateContactController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/loginForm";
+        return "index";
     }
 
     @GetMapping("/admin/dashboard")
@@ -124,8 +125,8 @@ public class DelegateContactController {
             }
 
 
-        } catch (Exception e){
-           redirectAttributes.addFlashAttribute("error","Something went wrong!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Something went wrong!");
         }
         return "redirect:/";
     }
@@ -139,7 +140,6 @@ public class DelegateContactController {
         modelAndView.setViewName("ManageEvents");
         return modelAndView;
     }
-
 
 
 }
