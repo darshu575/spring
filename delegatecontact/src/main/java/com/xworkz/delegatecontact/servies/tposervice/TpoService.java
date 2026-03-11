@@ -9,4 +9,5 @@ public interface TpoService {
 
     List<EventDTO> getAssignedEvents(String email);
 
+    int countEvents(String email);
 }

@@ -47,4 +47,9 @@ public class TpoServiceImpl  implements  TpoService{
 
         return eventDTOList;
     }
+
+    @Override
+    public int countEvents(String email) {
+        return tpoDao.countEvents(email);
+    }
 }
