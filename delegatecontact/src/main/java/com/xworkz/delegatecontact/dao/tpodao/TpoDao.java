@@ -9,4 +9,6 @@ public interface TpoDao {
     TpoEntity getTpoByemail(String email);
 
     List<EventEntity> getAssignedEventByEmail(String email);
+
+    int countEvents(String email);
 }

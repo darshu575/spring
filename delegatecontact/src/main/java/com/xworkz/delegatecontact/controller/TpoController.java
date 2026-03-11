@@ -1,7 +1,9 @@
 package com.xworkz.delegatecontact.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.xworkz.delegatecontact.dto.DelegateDto;
 import com.xworkz.delegatecontact.dto.EventDTO;
+import com.xworkz.delegatecontact.dto.RespondDto;
 import com.xworkz.delegatecontact.servies.delegateservice.DelegateService;
 import com.xworkz.delegatecontact.servies.tposervice.TpoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ public class TpoController {
     public TpoController() {
         System.out.println("TpoController Started");
     }
+
     @Autowired
     TpoService tpoService;
 
@@ -32,63 +35,85 @@ public class TpoController {
     }
 
     @GetMapping("/registerStudent")
-    public String DelegateREgister(){
+    public String DelegateREgister() {
         return "DelegateRegister";
     }
 
     @PostMapping("/tpologin")
-    public String tpoLoginPortal(@RequestParam String email, @RequestParam String loginCode, HttpSession session) {
+    public String tpoLoginPortal(@RequestParam String email, @RequestParam String loginCode, HttpSession session, Model model) {
         System.out.println("tpoLoginPortal controller started");
         System.out.println(email);
         System.out.println(loginCode);
 
-        boolean login=tpoService.tpoLoginPortal(email,loginCode);
-        if (login){
-            session.setAttribute("tpoemail",email);
-           return "TpoDashboard";
-        }else {
-return "TpoLoginPortal";
+        boolean login = tpoService.tpoLoginPortal(email, loginCode);
+        if (login) {
+            session.setAttribute("tpoemail", email);
+            int totalEvents = tpoService.countEvents(email);
+            int emailsSent = delegateService.countEmailsSent(email);
+            int totalResponses = delegateService.countResponses(email);
+
+            model.addAttribute("totalEvents", totalEvents);
+            model.addAttribute("emailsSent", emailsSent);
+            model.addAttribute("totalResponses", totalResponses);
+
+            return "TpoDashboard";
+        } else {
+            return "TpoLoginPortal";
         }
 
     }
-@GetMapping("/reviewEvents")
-    public ModelAndView getEventsByTpoEmail(HttpSession session, ModelAndView modelAndView){
-        String email= session.getAttribute("tpoemail").toString();
 
-    List<EventDTO> event =tpoService.getAssignedEvents(email);
-    modelAndView.addObject("events", event);
-    modelAndView.setViewName("ReceivedEvent");
-    return  modelAndView;
+    @GetMapping("/reviewEvents")
+    public ModelAndView getEventsByTpoEmail(HttpSession session, ModelAndView modelAndView) {
+        String email = session.getAttribute("tpoemail").toString();
 
-}
+        List<EventDTO> event = tpoService.getAssignedEvents(email);
+        modelAndView.addObject("events", event);
+        modelAndView.setViewName("ReceivedEvent");
+        return modelAndView;
 
-@PostMapping("registerStudent")
-    public ModelAndView RegisterDelegate(@ModelAttribute DelegateDto dto,ModelAndView modelAndView){
-
-    System.out.println("ResisterDelegate method Started");
-    System.out.println(dto);
-    boolean saved=delegateService.saveDelegate(dto);
-    if (saved){
-        modelAndView.addObject("saved","Register Successfully");
-        modelAndView.setViewName("DelegateRegister");
-    }else {
-        modelAndView.addObject("error","Not Saved");
-        modelAndView.setViewName("DelegateRegister");
     }
 
-    return modelAndView;
-}
+    @PostMapping("registerStudent")
+    public ModelAndView RegisterDelegate(@ModelAttribute DelegateDto dto, ModelAndView modelAndView) {
 
-@PostMapping("/contactDelegate")
-    public ModelAndView sendEmailToDelagate(@RequestParam int eventId,ModelAndView modelAndView){
-        delegateService.sendEmailToDelegate(eventId);
-        modelAndView.addObject("sendMessaged","Email Send to Delegate Successfully");
+        System.out.println("ResisterDelegate method Started");
+        System.out.println(dto);
+        boolean saved = delegateService.saveDelegate(dto);
+        if (saved) {
+            modelAndView.addObject("saved", "Register Successfully");
+            modelAndView.setViewName("DelegateRegister");
+        } else {
+            modelAndView.addObject("error", "Not Saved");
+            modelAndView.setViewName("DelegateRegister");
+        }
+
+        return modelAndView;
+    }
+
+    @PostMapping("/contactDelegate")
+    public ModelAndView sendEmailToDelagate(@RequestParam int eventId, ModelAndView modelAndView, HttpSession session) {
+        String tpoEmail = session.getAttribute("tpoemail").toString();
+        System.out.println(tpoEmail);
+        delegateService.sendEmailToDelegate(eventId, tpoEmail);
+        modelAndView.addObject("sendMessaged", "Email Send to Delegate Successfully");
         modelAndView.setViewName("redirect:/ReceivedEvent");
 
 
+        return modelAndView;
+    }
 
-        return  modelAndView;
-}
+    @GetMapping("/viewResponses")
+    public ModelAndView viewRespond(HttpSession session, ModelAndView modelAndView) {
+        String tpoEmail = session.getAttribute("tpoemail").toString();
+        System.out.println(tpoEmail);
+
+        List<RespondDto> respondDtos = delegateService.getResponsesByTpo(tpoEmail);
+        modelAndView.addObject("responses", respondDtos);
+        modelAndView.setViewName("ViewRespond");
+
+        return modelAndView;
+    }
 
 
 }
