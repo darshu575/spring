@@ -22,5 +22,6 @@ public class RespondEntity {
     private String address;
     private String  response;
     private String message;
-    private String  eventId;
+    private int  eventId;
+    private String tpoEmail;
 }
