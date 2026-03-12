@@ -17,7 +17,7 @@ public class EmailService {
         SimpleMailMessage simpleMailMessage=new SimpleMailMessage();
         simpleMailMessage.setTo(toEmail);
         simpleMailMessage.setSubject("Event Invitation");
-        String portalLink = "http://localhost:8085/delegatecontact/tpo/login";
+        String portalLink = "https://mervin-pulpy-lindy.ngrok-free.dev/delegatecontact/tpo/login";
         String emailBody =
                 "Dear TPO,\n\n" +
 
@@ -57,7 +57,7 @@ public class EmailService {
         SimpleMailMessage simpleMailMessage=new SimpleMailMessage();
         simpleMailMessage.setTo(emails);
         simpleMailMessage.setSubject("Event Invitation");
-        String RespondLink =" http://localhost:8085/delegatecontact/delegate/respond?eventId="
+        String RespondLink =" https://mervin-pulpy-lindy.ngrok-free.dev/delegatecontact/delegate/respond?eventId="
         + eventEntity.getId() +  "&tpoEmail=" + tpoEmail;
         String emailBody =
                 "Dear Delegate,\n\n" +

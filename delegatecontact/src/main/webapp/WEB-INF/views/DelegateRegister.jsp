@@ -62,7 +62,7 @@ border-radius:25px;
 Register Delegate
 </h4>
 
-<form action="registerStudent" method="post">
+<form action="registerDelegate" method="post">
 
 <div class="row">
 
