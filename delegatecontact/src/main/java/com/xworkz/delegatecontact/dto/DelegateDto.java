@@ -14,4 +14,5 @@ public class DelegateDto {
     private  int age;
     private  String phoneNumber;
     private String delegateType;
+    private String tpoEmail;
 }

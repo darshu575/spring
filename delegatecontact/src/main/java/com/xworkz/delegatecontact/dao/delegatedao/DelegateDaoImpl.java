@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
-import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -38,11 +37,12 @@ public class DelegateDaoImpl implements DelegateDao {
     }
 
     @Override
-    public List<DelegateEntity> getDelegateByType(String delegateType) {
+    public List<DelegateEntity> getDelegateByTypeAndtpoEmail(String delegateType, String tpoEmail) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
-            Query query = entityManager.createQuery(" FROM DelegateEntity d WHERE d.delegateType = :dtype ", DelegateEntity.class);
-            query.setParameter("dtype", delegateType);
+            Query query = entityManager.createQuery(" FROM DelegateEntity d WHERE d.delegateType = :type AND d.tpoEmail = :email", DelegateEntity.class);
+            query.setParameter("type", delegateType);
+            query.setParameter("email",tpoEmail);
             return query.getResultList();
         } finally {
             entityManager.close();
