@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
+
 @Service
 public class AdminServiceImpl implements AdminService{
     @Autowired
@@ -21,5 +24,25 @@ public class AdminServiceImpl implements AdminService{
         }
 
         return false;
+    }
+
+    @Override
+    public int getTotalEvents() {
+        return adminDao.getAllEvent();
+    }
+
+    @Override
+    public int getTotalDelegates() {
+        return adminDao.getAllGelegate();
+    }
+
+    @Override
+    public int getTotalResponses() {
+        return adminDao.getAllResponses();
+    }
+
+    @Override
+    public List<Object[]> getEventResponseCount() {
+        return adminDao.getEventResponses();
     }
 }
