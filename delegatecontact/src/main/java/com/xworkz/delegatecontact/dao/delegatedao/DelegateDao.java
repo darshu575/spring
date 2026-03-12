@@ -11,7 +11,7 @@ public interface DelegateDao {
 
     EventEntity getEventBuId(int eventId);
 
-    List<DelegateEntity> getDelegateByType(String delegateType);
+    List<DelegateEntity> getDelegateByTypeAndtpoEmail(String delegateType, String tpoEmail);
 
     boolean saveRespond(RespondEntity respondEntity);
 

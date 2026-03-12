@@ -1,8 +1,8 @@
 package com.xworkz.delegatecontact.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.xworkz.delegatecontact.dto.DelegateDto;
 import com.xworkz.delegatecontact.dto.EventDTO;
-import com.xworkz.delegatecontact.entity.eventEntity.EventEntity;
+import com.xworkz.delegatecontact.dto.RespondDto;
 import com.xworkz.delegatecontact.servies.AdminService;
 import com.xworkz.delegatecontact.servies.eventService.EventService;
 import lombok.SneakyThrows;
@@ -33,14 +33,10 @@ public class DelegateContactController {
     @Autowired
     EventService eventService;
 
+
     @GetMapping("/loginForm")
     public String loginPage() {
         return "adminLogin";
-    }
-
-    @GetMapping("/responses")
-    public String TpoRespond() {
-        return "AdminDelegateResponse";
     }
 
 
@@ -50,7 +46,6 @@ public class DelegateContactController {
                         HttpSession session,
                         Model model) {
         System.out.println("Admin Controller started");
-
         System.out.println(email);
         System.out.println(password);
 
@@ -73,6 +68,19 @@ public class DelegateContactController {
         if (admin == null) {
             return "redirect:/loginForm";
         }
+        int totalEvents= adminService.getTotalEvents();
+
+
+        int totalDelegates = adminService.getTotalDelegates();
+        int totalResponses = adminService.getTotalResponses();
+        List<Object[]> eventResponses = adminService.getEventResponseCount();
+
+        model.addAttribute("totalEvents",totalEvents);
+        model.addAttribute("totalDelegates",totalDelegates);
+        model.addAttribute("totalResponses",totalResponses);
+        model.addAttribute("eventResponses",eventResponses);
+
+
 
         List<EventDTO> list = eventService.getAllEvents();
 
@@ -138,6 +146,16 @@ public class DelegateContactController {
         System.out.println(eventList);
         modelAndView.addObject("eventList", eventList);
         modelAndView.setViewName("ManageEvents");
+        return modelAndView;
+    }
+
+    @GetMapping("/allResponses")
+    public ModelAndView getAllTpoResponses(ModelAndView modelAndView) {
+        System.out.println("GetAllTpoResponses");
+        List<RespondDto> respondDtos = eventService.getAllTpoResponses();
+        modelAndView.addObject("responses", respondDtos);
+        modelAndView.setViewName("AdminDelegateResponse");
+
         return modelAndView;
     }
 
