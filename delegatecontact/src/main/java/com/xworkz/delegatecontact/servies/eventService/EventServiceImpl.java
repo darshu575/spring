@@ -2,6 +2,8 @@ package com.xworkz.delegatecontact.servies.eventService;
 
 import com.xworkz.delegatecontact.dao.eventDao.EventDao;
 import com.xworkz.delegatecontact.dto.EventDTO;
+import com.xworkz.delegatecontact.dto.RespondDto;
+import com.xworkz.delegatecontact.entity.RespondEntity;
 import com.xworkz.delegatecontact.entity.eventEntity.EventEntity;
 import com.xworkz.delegatecontact.entity.eventEntity.TpoEntity;
 import com.xworkz.delegatecontact.util.CodeGeneratorUtil;
@@ -83,5 +85,23 @@ public class EventServiceImpl implements EventService {
 
         }
         return eventList;
+    }
+
+    @Override
+    public List<RespondDto> getAllTpoResponses() {
+
+        List<RespondEntity> respondEntities=eventDao.getAllTpoResponses();
+        if (respondEntities==null || respondEntities.isEmpty()){
+            return new ArrayList<>();
+        }
+        List<RespondDto> respondDtoList = new ArrayList<>();
+        for (RespondEntity respondEntity:respondEntities){
+            RespondDto respondDto=new RespondDto();
+            BeanUtils.copyProperties(respondEntity,respondDto);
+            respondDtoList.add(respondDto);
+        }
+
+
+        return respondDtoList;
     }
 }

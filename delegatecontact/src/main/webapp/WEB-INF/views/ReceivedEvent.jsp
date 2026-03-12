@@ -86,6 +86,11 @@ class="btn btn-secondary">
 
 <!-- Events -->
 <div class="row g-3">
+<c:if test="${not empty successMsg}">
+<script>
+alert("${successMsg}");
+</script>
+</c:if>
 
 <c:forEach var="event" items="${events}">
 
@@ -158,10 +163,15 @@ class="btn btn-primary btn-sm">
 <div class="mt-2">
 
 <a href="${pageContext.request.contextPath}/brochures/${event.brochurePath}"
-
 class="btn btn-outline-primary btn-sm">
 
 <i class="fa fa-download"></i> Brochure
+
+</a>
+
+</div>
+
+</c:if>
 
 <form action="${pageContext.request.contextPath}/tpo/contactDelegate" method="post">
 
@@ -177,7 +187,6 @@ class="btn btn-outline-primary btn-sm">
 
 </div>
 
-</c:if>
 
 </div>
 

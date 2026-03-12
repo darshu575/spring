@@ -87,7 +87,7 @@ transition:0.3s;
 <i class="fa fa-calendar"></i> Received Events
 </a>
 
-<a href="${pageContext.request.contextPath}/tpo/registerStudent">
+<a href="${pageContext.request.contextPath}/tpo/openRegisterStudent">
 <i class="fa fa-calendar"></i>Register Delegate
 </a>
 
