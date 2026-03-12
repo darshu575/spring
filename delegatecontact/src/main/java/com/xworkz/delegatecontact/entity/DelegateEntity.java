@@ -22,5 +22,6 @@ public class DelegateEntity {
     private  int age;
     private  String phoneNumber;
     private String delegateType;
+    private String tpoEmail;
 
 }

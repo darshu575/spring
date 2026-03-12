@@ -43,7 +43,7 @@ public class DelegateServiceImpl implements DelegateService{
         System.out.println("sendEmailToDelegate in service Started");
         String delegateType= eventEntity.getDelegateType();
         System.out.println(delegateType);
-        List<DelegateEntity> delegateEntities=delegateDao.getDelegateByType(delegateType);
+        List<DelegateEntity> delegateEntities=delegateDao.getDelegateByTypeAndtpoEmail(delegateType,tpoEmail);
         System.out.println(delegateEntities);
         for (DelegateEntity delegate:delegateEntities){
             String emails=delegate.getEmail();
