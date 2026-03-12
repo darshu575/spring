@@ -1,5 +1,6 @@
 package com.xworkz.delegatecontact.dao.eventDao;
 
+import com.xworkz.delegatecontact.entity.RespondEntity;
 import com.xworkz.delegatecontact.entity.eventEntity.EventEntity;
 
 import java.util.List;
@@ -9,4 +10,5 @@ public interface EventDao {
 
     List<EventEntity> getAllEvents();
 
+    List<RespondEntity> getAllTpoResponses();
 }
