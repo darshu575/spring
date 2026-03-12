@@ -18,17 +18,21 @@ pageEncoding="UTF-8"%>
 <style>
 
 body{
+
     background:#f4f6fb;
-    font-family:Arial;
+        font-family:Arial;
+        overflow-x:hidden;
 }
 
 /* Sidebar */
 
 .sidebar{
-    height:100vh;
+    min-height:100vh;
     background:linear-gradient(180deg,#4da6ff,#1a75ff);
     padding:20px;
     color:white;
+    position:fixed;
+    width:16.6%;
 }
 
 .sidebar h4{
@@ -64,6 +68,7 @@ body{
     border-radius:15px;
     box-shadow:0 10px 25px rgba(0,0,0,0.08);
     transition:0.3s;
+    padding:25px;
 }
 
 .card:hover{
@@ -105,9 +110,10 @@ body{
 <i class="fa fa-calendar"></i> Manage Events
 </a>
 
-<a href="${pageContext.request.contextPath}/responses">
+<a href="${pageContext.request.contextPath}/allResponses">
 <i class="fa fa-envelope"></i> View Responses
 </a>
+
 
 <a href="${pageContext.request.contextPath}/logout">
 <i class="fa fa-sign-out-alt"></i> Logout
@@ -118,7 +124,7 @@ body{
 
 <!-- Main Content -->
 
-<div class="col-md-10">
+<div class="col-md-10 offset-md-2">
 
 <!-- Topbar -->
 
@@ -261,6 +267,40 @@ No Events Available
 </c:if>
 
 </tbody>
+
+</table>
+
+</div>
+
+<div class="card mt-5 p-4">
+
+<h5 class="mt-2">
+<i class="fa fa-chart-bar"></i> Event Response Summary
+</h5>
+
+<table class="table table-bordered table-striped mt-3">
+
+<tr>
+<th>Event ID</th>
+<th>Total Responses</th>
+</tr>
+
+<c:forEach var="row" items="${eventResponses}">
+
+<tr>
+<td>${row[0]}</td>
+<td>${row[1]}</td>
+</tr>
+
+</c:forEach>
+
+<c:if test="${empty eventResponses}">
+<tr>
+<td colspan="2" class="text-center text-danger">
+No Responses Available
+</td>
+</tr>
+</c:if>
 
 </table>
 
