@@ -20,6 +20,7 @@ public class DelegateController {
 
     @GetMapping("/respond")
     public String openRespondPage(@RequestParam int eventId,@RequestParam String tpoEmail, Model model) {
+        System.out.println("OpenRespondOages Started");
         model.addAttribute("eventId",eventId);
         model.addAttribute("tpoEmail",tpoEmail);
         return "DelegateRespondPage";
@@ -27,6 +28,7 @@ public class DelegateController {
 
     @PostMapping("/saveResponse")
     public ModelAndView saveRespond(@ModelAttribute RespondDto respondDto, ModelAndView modelAndView) {
+        System.out.println("SaveRespond Started");
         boolean save = delegateService.saveRespond(respondDto);
         modelAndView.addObject("saved", save);
         modelAndView.setViewName("DelegateRespondPage");
