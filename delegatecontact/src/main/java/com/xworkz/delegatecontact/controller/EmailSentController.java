@@ -21,7 +21,7 @@ public class EmailSentController {
 
     @PostMapping("/sendEventEmail")
     public ModelAndView sendEventEmail(@RequestParam int eventId,ModelAndView modelAndView){
-
+        System.out.println("SendEventEmail Started");
         emailSentService.sendEventEmailToTPO(eventId);
         modelAndView.addObject("message", "Emails sent successfully to all TPOs!");
         modelAndView.setViewName("redirect:/events");
