@@ -1,6 +1,5 @@
 package com.xworkz.delegatecontact.controller;
 
-import com.xworkz.delegatecontact.dto.DelegateDto;
 import com.xworkz.delegatecontact.dto.EventDTO;
 import com.xworkz.delegatecontact.dto.RespondDto;
 import com.xworkz.delegatecontact.servies.AdminService;
@@ -83,13 +82,9 @@ public class DelegateContactController {
 
 
         List<EventDTO> list = eventService.getAllEvents();
-
         System.out.println("Dashboard Events: " + list);
-
         model.addAttribute("eventLists", list);
         model.addAttribute("today", LocalDate.now());   // ADD THIS LINE
-
-
         return "adminDashboard";
     }
 
@@ -125,7 +120,6 @@ public class DelegateContactController {
             boolean saved = eventService.saveEvent(dto);
             if (saved) {
                 redirectAttributes.addFlashAttribute("success", "Event Created Successfully");
-
 
             } else {
                 redirectAttributes.addFlashAttribute("error", "Event Not Created");
