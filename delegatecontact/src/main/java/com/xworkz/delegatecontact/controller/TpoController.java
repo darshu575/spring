@@ -68,6 +68,7 @@ public class TpoController {
 
     @GetMapping("/reviewEvents")
     public ModelAndView getEventsByTpoEmail(HttpSession session, ModelAndView modelAndView) {
+        System.out.println("GetEventsByTpoEmail Started");
         String email = session.getAttribute("tpoemail").toString();
 
         List<EventDTO> event = tpoService.getAssignedEvents(email);

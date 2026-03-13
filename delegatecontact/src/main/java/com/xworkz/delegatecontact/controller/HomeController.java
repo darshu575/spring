@@ -21,9 +21,8 @@ public class HomeController {
 
     @GetMapping("/")
     public String index(Model model) {
-
+        System.out.println("index Started");
         List<EventDTO> eventList = eventService.getAllEvents();
-
 
         model.addAttribute("eventList", eventList);
 
