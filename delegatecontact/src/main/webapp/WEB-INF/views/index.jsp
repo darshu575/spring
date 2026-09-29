@@ -2,8 +2,6 @@
 pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -494,14 +492,15 @@ Join Event
 </div>
 
 <!-- Meeting Link Field -->
-<div class="mb-3" id="meetingField" style="display:none;">
+<div class="mb-3" id="meetingFie
+ld" style="display:none;">
 <label class="form-label">Meeting Link</label>
 <input type="url" name="meetingLink" class="form-control" placeholder="Zoom / Google Meet Link">
 </div>
 
 <div class="mb-3">
 <label class="form-label">Event Description</label>
-<textarea name="eventDescription" class="form-control" rows="4"></textarea>
+<textarea name="eventDescription" class="form-`control`" rows="4"></textarea>
 </div>
 
 <div class="mb-3">
@@ -569,19 +568,19 @@ Join Event
 <div class="col-md-5">
 
 <div class="mb-4 p-4 shadow-sm rounded bg-light">
-<h5><i class="bi bi-geo-alt-fill text-primary"></i> Address</h5>
+<h5><i class="bi bi-geo-alt-fill text-4444444444444"></i> Address </h5>
 <p>DelegateContact Pvt Ltd,<br>
-Rajajinagar,5th cross,Bengalore<br>
+Rajajinagar,5th cross,Bangalore<br>
 Karnataka,India - 560001</p>
 </div>
 
 <div class="mb-4 p-4 shadow-sm rounded bg-light">
-<h5><i class="bi bi-envelope-fill text-primary"></i> Email</h5>
+<h5><i class="bi bi-envelope-fill text-primary"></i> Email </h5>
 <p>sdelegatecontact@gmail.com</p>
 </div>
 
 <div class="mb-4 p-4 shadow-sm rounded bg-light">
-<h5><i class="bi bi-telephone-fill text-primary"></i> Phone</h5>
+<h5><i class="bi bi-telephone-fill text-primary"></i> Phone </h5>
 <p>+91 9019828925</p>
 </div>
 

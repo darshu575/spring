@@ -19,7 +19,7 @@ public class MailConfigaration {
 
 
         mailSender.setUsername("darshanvo90@gmail.com");
-        mailSender.setPassword("fohp wpla splu imka");
+        mailSender.setPassword("sxgb puxf tqqp yysd");
 
         Properties properties=mailSender.getJavaMailProperties();
         properties.put("mail.transport.protocol","smtp");
